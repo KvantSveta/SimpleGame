@@ -11,14 +11,14 @@ class Person:
 	def punch(self, enemy):
 		if random() < self.precision + 0.1:
 			enemy.health -= self.hand
-			if self.health < 0:
-				self.health = 0
+			if enemy.health < 0:
+				enemy.health = 0
 	
 	def kick(self, enemy):		
 		if random() < self.precision - 0.17:
 			enemy.health -= self.leg
-			if self.health < 0:
-				self.health = 0
+			if enemy.health < 0:
+				enemy.health = 0
 
 	def block(self, enemy):
 		if random() > self.precision + 0.2:
