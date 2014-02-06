@@ -7,7 +7,9 @@ from random import randint
 def	display(p1, p2):
 	length = 9
 	tab = '                                       '
-	print('Name'.ljust(length), p1.name, '       ', tab, 'Name'.ljust(length), p2.name)
+	print('Name'.ljust(length), p1.name, end = '')
+	#print(tab, end = '')
+	print('Name'.rjust(length), p2.name)
 	print('Health'.ljust(length), '[', p1.health, ' ]', '    ', tab ,'Health'.ljust(length), '[', p2.health   , ' ]')
 	print('Precision'.ljust(length), '[', p1.precision, '%]', '    ', tab,  'Precision'.ljust(length), '[', p2.precision, '%]')
 	print('Punch'.ljust(length), '[ ', p1.hand, ' ]', '    ', tab, 'Punch'.ljust(length), '[ ', p2.hand, ' ]')
