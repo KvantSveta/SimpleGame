@@ -1,8 +1,7 @@
 #!/usr/bin/python3.3
 
-from classperson import Person
-from art import *
-from random import randint 
+from classperson import Person, randint
+from display import display
 
 def	display(p1, p2):
 	length = 9
@@ -18,7 +17,7 @@ def	display(p1, p2):
 	print(tab, end = '')
 	p2.is_dead()
 	print(person_big)
-
+ 
 def event(p1, p2):
 	action = int(input('Действие: '))
 
