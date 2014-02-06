@@ -1,8 +1,6 @@
 #!/usr/bin/python3.3
 
-from classperson import Person
-#from art import *
-from random import randint 
+from classperson import Person, randint
 from display import display
 
 def event(p1, p2):
