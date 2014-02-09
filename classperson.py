@@ -20,7 +20,7 @@ class Person:
 					enemy.health = 0
 		else:
 			print('Действие совершить нельзя')
-			self.endurance += 1	
+			self.endurance += 1.5	
 	
 	def kick(self, enemy):
 		if self.endurance - 3 >= 0:
@@ -32,7 +32,7 @@ class Person:
 					enemy.health = 0
 		else:
 			print('Действие совершить нельзя')
-			self.endurance += 1
+			self.endurance += 1.5
 
 	def block(self):
 		self.endurance += 1
