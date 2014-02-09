@@ -12,4 +12,3 @@ def	display(p1, p2):
 	p1.is_dead()
 	print(tab, end = '')
 	p2.is_dead()
-	print(person_big)

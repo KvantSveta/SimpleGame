@@ -31,6 +31,8 @@ def event_2(p2, p1):
 p1 = Person('John', 10, 70, 2, 3, 10)
 p2 = Person('Bot', 10, 70, 2, 3, 10)
 
+print(person_start)
+
 while True:
 	display(p1, p2)
 	
@@ -46,3 +48,5 @@ while True:
 
 	if act_p2 == 3:
 		p2.health = life_p2
+
+	
