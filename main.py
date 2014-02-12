@@ -49,4 +49,26 @@ while True:
 	if act_p2 == 3:
 		p2.health = life_p2
 
+	if act_p1 == 1 and act_p2 == 1:
+		print(person_punch_punch)
+	elif act_p1 == 1 and act_p2 == 2:
+		print(person_punch_kick)	
+	elif act_p1 == 1 and act_p2 == 3:
+		print(person_punch_block)
+	elif act_p1 == 2 and act_p2 == 1:
+		print(person_kick_punch)
+	elif act_p1 == 2 and act_p2 == 2:
+		print(person_kick_kick)
+	elif act_p1 == 2 and act_p2 == 3:
+		print(person_kick_block)
+	elif act_p1 == 3 and act_p2 == 1:
+		print(person_block_punch)
+	elif act_p1 == 3 and act_p2 == 2:
+		print(person_block_kick)
+	elif act_p1 == 3 and act_p2 == 3:
+		print(person_block_block)
+	else:
+		print(person_start)
+
+
 	
