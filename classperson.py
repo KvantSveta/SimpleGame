@@ -43,7 +43,6 @@ class Person:
 
 	def is_dead(self):
 		if self.health == 0:
-			print('You are died', end = '')
 			return True
 
 

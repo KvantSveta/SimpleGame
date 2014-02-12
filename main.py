@@ -3,7 +3,6 @@
 from classperson import Person
 from random import randint
 from display import *
-import os
 
 def event(p1, p2):
 	action = int(input('Действие: '))
