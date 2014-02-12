@@ -11,28 +11,28 @@ class Person:
 		self.endurance = endurance
 
 	def punch(self, enemy):
-		if self.endurance - 2 >= 0:
-			self.endurance -= 2
+		if self.endurance - 3 >= 0:
+			self.endurance -= 3
 			if random() < self.precision + 0.1:
-				print('Удар рукой прошел')
+				#print('Удар рукой прошел')
 				enemy.health -= self.hand
 				if enemy.health < 0:
 					enemy.health = 0
 		else:
 			print('Действие совершить нельзя')
-			self.endurance += 1.5	
+			self.endurance += 2	
 	
 	def kick(self, enemy):
-		if self.endurance - 3 >= 0:
-			self.endurance -= 3		
-			if random() < self.precision - 0.17:
-				print('Удар ногой прошел')
+		if self.endurance - 4 >= 0:
+			self.endurance -= 4		
+			if random() < self.precision - 0.2:
+				#print('Удар ногой прошел')
 				enemy.health -= self.leg
 				if enemy.health < 0:
 					enemy.health = 0
 		else:
 			print('Действие совершить нельзя')
-			self.endurance += 1.5
+			self.endurance += 2
 
 	def block(self):
 		self.endurance += 1

@@ -79,7 +79,7 @@ person_punch_block = '''
 !                            wWw           xXx                                 !
 !                           (^_^)         (O_o)                                !
 !                            vVv            w                                  !
-!                             Y____B    L__/|\                                  !
+!                             Y____B    L__/|\                                 !
 !                             |\_/B         |_/                                !
 !                             |             |                                  !
 !                             |             |                                  !

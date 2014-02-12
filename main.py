@@ -3,6 +3,7 @@
 from classperson import Person
 from random import randint
 from display import *
+import os
 
 def event(p1, p2):
 	action = int(input('Действие: '))
@@ -28,15 +29,16 @@ def event_2(p2, p1):
 
 	return action
 
-p1 = Person('John', 10, 70, 2, 3, 10)
-p2 = Person('Bot', 10, 70, 2, 3, 10)
+p1 = Person('John', 50, 70, 3, 5, 13)
+p2 = Person('Bot', 50, 70, 3, 5, 13)
+
+display(p1, p2)
 
 print(person_start)
 
 while True:
-	display(p1, p2)
-	
 	print('Выберите действие: 1 - удар рукой, 2 - удар ногой, 3 - блок')
+	
 	life_p1 = p1.health
 	life_p2 = p2.health	
 
@@ -48,6 +50,10 @@ while True:
 
 	if act_p2 == 3:
 		p2.health = life_p2
+
+	os.system('clear')
+	
+	display(p1, p2)
 
 	if act_p1 == 1 and act_p2 == 1:
 		print(person_punch_punch)
@@ -69,6 +75,5 @@ while True:
 		print(person_block_block)
 	else:
 		print(person_start)
-
 
 	
