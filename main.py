@@ -75,4 +75,3 @@ while True:
 	else:
 		print(person_start)
 
-	
