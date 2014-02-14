@@ -312,3 +312,9 @@ person_death_death = '''
 !                            vVv            w                                  !
 !><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><!
 '''
+person = [
+	[person_punch_punch, person_punch_kick, person_punch_block, person_punch_wait],
+	[person_kick_punch, person_kick_kick, person_kick_block, person_kick_wait],
+	[person_block_punch, person_block_kick, person_block_block, person_block_wait],
+	[person_wait_punch, person_wait_kick, person_wait_block, person_wait_wait]
+]

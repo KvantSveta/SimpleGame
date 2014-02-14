@@ -39,8 +39,8 @@ def event_2(p2, p1):
 
 	return action
 
-p1 = Person('John', 1, 70, 3, 5, 13)
-p2 = Person('Bot', 1, 70, 3, 5, 13)
+p1 = Person('John', 15, 70, 3, 5, 13)
+p2 = Person('Bot', 15, 70, 3, 5, 13)
 
 display(p1, p2)
 
@@ -65,42 +65,7 @@ while True:
 	
 	display(p1, p2)
 
-	if act_p1 == 1 and act_p2 == 1:
-		print(person_punch_punch)
-	elif act_p1 == 1 and act_p2 == 2:
-		print(person_punch_kick)	
-	elif act_p1 == 1 and act_p2 == 3:
-		print(person_punch_block)
-	elif act_p1 == 1 and act_p2 == 4:
-		print(person_punch_wait)
-
-	elif act_p1 == 2 and act_p2 == 1:
-		print(person_kick_punch)
-	elif act_p1 == 2 and act_p2 == 2:
-		print(person_kick_kick)
-	elif act_p1 == 2 and act_p2 == 3:
-		print(person_kick_block)
-	elif act_p1 == 2 and act_p2 == 4:
-		print(person_kick_wait)
-
-	elif act_p1 == 3 and act_p2 == 1:
-		print(person_block_punch)
-	elif act_p1 == 3 and act_p2 == 2:
-		print(person_block_kick)
-	elif act_p1 == 3 and act_p2 == 3:
-		print(person_block_block)
-	elif act_p1 == 3 and act_p2 == 4:
-		print(person_block_wait)
-
-	elif act_p1 == 4 and act_p2 == 1:
-		print(person_wait_punch)
-	elif act_p1 == 4 and act_p2 == 2:
-		print(person_wait_kick)
-	elif act_p1 == 4 and act_p2 == 3:
-		print(person_wait_block)
-	elif act_p1 == 4 and act_p2 == 4:
-		print(person_wait_wait)
-
-	else:
-		print(person_start)
-
+	for i in range(0, 5):
+		for j in range(0, 5):
+			if act_p1 == i and act_p2 == j:
+				print(person[i - 1][j - 1])
