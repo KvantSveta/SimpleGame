@@ -47,7 +47,7 @@ while True:
 
 	if act_p1 == 3:
 		p1.health = life_p1
-
+		
 	if act_p2 == 3:
 		p2.health = life_p2
 
