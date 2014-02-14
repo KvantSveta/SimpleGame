@@ -1,4 +1,4 @@
-from random import random
+from random import randint
 from os import _exit
 
 class Person:
@@ -13,7 +13,7 @@ class Person:
 	def punch(self, enemy):
 		if self.endurance - 3 >= 0:
 			self.endurance -= 3
-			if random() < self.precision + 0.1:
+			if randint(1, 100) < self.precision + 10:
 				#print('Удар рукой прошел', end = '')
 				enemy.health -= self.hand
 				if enemy.health < 0:
@@ -27,7 +27,7 @@ class Person:
 	def kick(self, enemy):
 		if self.endurance - 4 >= 0:
 			self.endurance -= 4		
-			if random() < self.precision - 0.2:
+			if randint(1, 100) < self.precision - 10:
 				#print('Удар ногой прошел', end = '')
 				enemy.health -= self.leg
 				if enemy.health < 0:
@@ -40,7 +40,7 @@ class Person:
 
 	def block(self):
 		self.endurance += 1
-		if random() < self.precision + 0.2:
+		if randint(1, 100) < self.precision + 20:
 			#print('Блок прошел', end = '')
 			return 0
 		return 3

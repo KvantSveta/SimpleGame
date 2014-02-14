@@ -2,14 +2,13 @@
 
 from classperson import Person
 from display import *
-from time import sleep
 from event import *
 from os import system
 
 system('clear')
 
-p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+p1 = Person('John', 15, 70, 3, 5, 13)
+p2 = Person('Bot', 15, 70, 3, 5, 13)
 
 display(p1, p2)
 
