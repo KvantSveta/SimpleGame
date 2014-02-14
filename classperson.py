@@ -48,9 +48,3 @@ class Person:
 	def wait(self):
 		self.endurance += 2	
 		return 4
-
-	def is_dead(self):
-		if self.health == 0:
-			return True
-
-

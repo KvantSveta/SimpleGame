@@ -10,16 +10,16 @@ def	display(p1, p2):
 	print('Punch'.ljust(length), '[ ', p1.hand, ' ]', tab, 'Punch'.ljust(length), '[ ', p2.hand, ' ]')
 	print('Kick'.ljust(length), '[ ', p1.leg, ' ]', tab, 'Kick'.ljust(length), '[ ', p2.leg, ' ]')
 	print('Endurance'.ljust(length), '[', str(p1.endurance).rjust(2), ' ]', tab, 'Endurance'.ljust(length), '[', str(p2.endurance).rjust(2), ' ]')
-	if p1.is_dead() or p2.is_dead():
-		string = 'You are died!!!!!'
-		if p1.is_dead() and p2.is_dead():
-			print(string, ' ' * 44 , string, end = '')
+	if p1.health == 0 or p2.health == 0:
+		string_win = 'You are win!!!!!!'
+		string_death = 'You are died!!!!!'
+		if p1.health == 0 and p2.health == 0:
+			print(string_death, ' ' * 44, string_death)
 			print(person_death_death)
-		elif p1.is_dead():
-			print(string, end = '')
+		elif p1.health == 0:
+			print(string_death, ' ' * 44, string_win)
 			print(person_death_win, end = '')
-		#print(tab, end = '')
 		else:
-			print(' ' * 62, string, end = '')
+			print(string_win, ' ' * 44, string_death)
 			print(person_win_death)
 		os._exit(0)
