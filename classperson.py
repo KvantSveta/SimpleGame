@@ -1,5 +1,4 @@
 from random import randint
-from os import _exit
 
 class Person:
 	def __init__(self, name, health, precision, hand, leg, endurance):

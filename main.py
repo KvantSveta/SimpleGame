@@ -1,7 +1,7 @@
 #!/usr/bin/python3.3
 
 from classperson import Person
-from display import *
+from display import display
 from event import *
 from os import system
 
@@ -39,3 +39,5 @@ while True:
 		for j in range(1, 5):
 			if act_p1 == i and act_p2 == j:
 				print(person[i - 1][j - 1])
+
+	match(p1, p2)
