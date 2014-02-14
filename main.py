@@ -3,9 +3,10 @@
 from classperson import Person
 from random import randint
 from display import *
+from time import sleep
 
 def event(p1, p2):
-	action = int(input('Действие: '))
+	action = randint(1, 3)#int(input('Действие: '))
 
 	if action == 1:
 		p1.punch(p2)
@@ -36,7 +37,7 @@ display(p1, p2)
 print(person_start)
 
 while True:
-	print('Выберите действие: 1 - удар рукой, 2 - удар ногой, 3 - блок')
+	#print('Выберите действие: 1 - удар рукой, 2 - удар ногой, 3 - блок')
 	
 	life_p1 = p1.health
 	life_p2 = p2.health	
@@ -49,6 +50,8 @@ while True:
 
 	if act_p2 == 3:
 		p2.health = life_p2
+
+	sleep(1)
 
 	os.system('clear')
 	
