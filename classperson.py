@@ -42,8 +42,8 @@ class Person:
 		self.endurance += 1
 		if random() < self.precision + 0.2:
 			#print('Блок прошел', end = '')
-			return 3
-		return 0
+			return 0
+		return 3
 
 	def wait(self):
 		self.endurance += 2	
