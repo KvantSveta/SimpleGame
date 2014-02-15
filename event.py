@@ -7,7 +7,7 @@ def event(p1, p2):
 	while True:
 		action = input('Действие: ')
 
-		if action.isdigit():
+		if action.isdigit() and int(action) in range(1, 5):
 			action = int(action)
 
 			if action == 1:
