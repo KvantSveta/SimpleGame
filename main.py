@@ -15,7 +15,7 @@ display(p1, p2)
 print(person_start)
 
 while True:
-	print('Выберите действие: 1 - удар рукой, 2 - удар ногой, 3 - блок, 4 - ожидать')
+	print('1 - удар рукой, 2 - удар ногой, 3 - блок, 4 - ожидать, q - выйти')
 	
 	life_p1 = p1.health
 	life_p2 = p2.health	

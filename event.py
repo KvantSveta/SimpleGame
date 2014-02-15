@@ -4,18 +4,29 @@ from os import _exit, system
 from time import sleep
 
 def event(p1, p2):
-	action = int(input('Действие: '))
+	while True:
+		action = input('Действие: ')
 
-	if action == 1:
-		p1.punch(p2)
-	elif action == 2:
-		p1.kick(p2)
-	elif action == 3:
-		action = p1.block()
-	else:
-		p1.wait()
+		if action.isdigit():
+			action = int(action)
 
-	return action
+			if action == 1:
+				p1.punch(p2)
+			elif action == 2:
+				p1.kick(p2)
+			elif action == 3:
+				action = p1.block()
+			else:
+				p1.wait()
+
+			return action
+
+		elif action == 'q':
+			_exit(0)
+
+		else:
+			print('Внимательнее нужно быть!!! Попробуй еще раз')
+
 	
 def event_2(p2, p1):
 	action = randint(1, 4)
