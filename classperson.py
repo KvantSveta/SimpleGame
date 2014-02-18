@@ -5,6 +5,9 @@ class Person:
 		self.name = name
 		self.health = health
 		self.precision = precision
+		self.precision_punch = precision + 10
+		self.precision_kick = precision - 10
+		self.precision_block = precision + 20
 		self.hand = hand
 		self.leg = leg
 		self.endurance = endurance
@@ -12,7 +15,7 @@ class Person:
 	def punch(self, enemy):
 		if self.endurance - 3 >= 0:
 			self.endurance -= 3
-			if randint(1, 100) < self.precision + 10:
+			if randint(1, 100) < self.precision_punch:
 				#print('Удар рукой прошел', end = '')
 				enemy.health -= self.hand
 				if enemy.health < 0:
@@ -26,7 +29,7 @@ class Person:
 	def kick(self, enemy):
 		if self.endurance - 4 >= 0:
 			self.endurance -= 4		
-			if randint(1, 100) < self.precision - 10:
+			if randint(1, 100) < self.precision_kick:
 				#print('Удар ногой прошел', end = '')
 				enemy.health -= self.leg
 				if enemy.health < 0:
@@ -39,7 +42,7 @@ class Person:
 
 	def block(self):
 		self.endurance += 1
-		if randint(1, 100) < self.precision + 20:
+		if randint(1, 100) < self.precision_block:
 			#print('Блок прошел', end = '')
 			return 0
 		return 3
