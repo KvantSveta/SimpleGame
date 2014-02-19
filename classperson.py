@@ -23,7 +23,7 @@ class Person:
 			return 1
 		else:
 			#print('Действие совершить нельзя', end = '')
-			self.endurance += 2	
+			self.endurance += 5	
 			return 4
 	
 	def kick(self, enemy):
@@ -37,7 +37,7 @@ class Person:
 			return 2
 		else:
 			#print('Действие совершить нельзя', end = '')
-			self.endurance += 2
+			self.endurance += 5
 			return 4
 
 	def block(self):
@@ -48,5 +48,5 @@ class Person:
 		return 3
 
 	def wait(self):
-		self.endurance += 2	
+		self.endurance += 5	
 		return 4
