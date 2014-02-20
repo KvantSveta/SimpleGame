@@ -1,5 +1,7 @@
 #!/usr/bin/python3.3
 
+__author__ = 'j.d.'
+
 from classperson import Person
 from display import display
 from event import *

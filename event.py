@@ -11,15 +11,13 @@ def event(p1, p2):
 			action = int(action)
 
 			if action == 1:
-				p1.punch(p2)
+				return p1.punch(p2)
 			elif action == 2:
-				p1.kick(p2)
+				return p1.kick(p2)
 			elif action == 3:
-				action = p1.block()
+				return p1.block()
 			else:
-				p1.wait()
-
-			return action
+				return p1.wait()
 
 		elif action == 'q':
 			_exit(0)
@@ -29,11 +27,9 @@ def event(p1, p2):
 
 def event_2(p2, p1):
 	if p2.endurance >= 4:
-		p2.kick(p1)
-		return 2
+		return p2.kick(p1)
 	else:
-		p2.block()
-		return 3
+		return p2.block()
 
 def match(p1, p2):
 	if p1.health == 0 or p2.health == 0:
