@@ -27,7 +27,6 @@ def event(p1, p2):
 		else:
 			print('Внимательнее нужно быть!!! Попробуй еще раз')
 
-	
 def event_2(p2, p1):
 	if p2.endurance >= 4:
 		p2.kick(p1)
