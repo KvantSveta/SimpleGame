@@ -29,18 +29,12 @@ def event(p1, p2):
 
 	
 def event_2(p2, p1):
-	action = randint(1, 4)
-
-	if action == 1:
-		p2.punch(p1)
-	elif action == 2:
+	if p2.endurance >= 4:
 		p2.kick(p1)
-	elif action == 3:
-		action = p2.block()
+		return 2
 	else:
-		p2.wait()
-
-	return action
+		p2.block()
+		return 3
 
 def match(p1, p2):
 	if p1.health == 0 or p2.health == 0:
