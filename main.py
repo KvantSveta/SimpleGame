@@ -15,7 +15,7 @@ p2 = Person('Bot', 15, 70, 3, 5, 13)
 display(p1, p2)
 
 print(person_start)
-
+'''
 while True:
 	print('1 - удар рукой({0}%), 2 - удар ногой({1}%), 3 - блок({2}%), 4 - ожидать, q - выйти'.format(p1.precision_punch, p1.precision_kick, p1.precision_block))
 	
@@ -43,3 +43,4 @@ while True:
 				print(person[i - 1][j - 1])
 
 	match(p1, p2)
+'''
