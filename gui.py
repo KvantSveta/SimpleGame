@@ -44,18 +44,21 @@ label6 = Label(frame, text = 'Endurance'.ljust(length) + '[' + str(p1.endurance)
 label6.pack(anchor = W)
 
 label7 = Label(frame, text = person_start)
-label7.pack(anchor = W)
+label7.pack()
 
-button1 = Button(frame, text = 'Удар рукой', command = quit)
+button1 = Button(frame, text = 'Удар рукой', command = p1.punch(p2))
 button1.pack(side = LEFT, expand = YES, fill = X)
 
-button2 = Button(frame, text = 'Удар ногой', command = quit)
+button2 = Button(frame, text = 'Удар ногой', command = p1.kick(p2))
 button2.pack(side = LEFT, expand = YES, fill = X)
 
-button3 = Button(frame, text = '   Блок   ', command = quit)
+button3 = Button(frame, text = '   Блок   ', command = p1.block())
 button3.pack(side = LEFT, expand = YES, fill = X)
 
-button4 = Button(frame, text = '   Ждать  ', command = frame.quit)
+button4 = Button(frame, text = '   Ждать  ', command = p1.wait())
 button4.pack(side = LEFT, expand = YES, fill = X)
+
+button5 = Button(frame, text = '   Выйти  ', command = frame.quit)
+button5.pack(side = LEFT, expand = YES, fill = X)
 
 frame.mainloop()
