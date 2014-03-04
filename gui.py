@@ -15,6 +15,10 @@ def quit():
 window = Tk()
 window.title('Simple Game')
 
+win1 = Toplevel()
+lab1 = Label(win1, text = 'Здесь будет обображена стратегия бота')
+lab1.pack()
+
 frame = Frame()
 frame.pack()
 
