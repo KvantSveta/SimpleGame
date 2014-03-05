@@ -7,14 +7,12 @@ from display import display
 from event import *
 from os import system
 
-system('clear')
-
 p1 = Person('John', 15, 70, 3, 5, 13)
 p2 = Person('Bot', 15, 70, 3, 5, 13)
 
-display(p1, p2)
+#display(p1, p2)
 
-print(person_start)
+#print(person_start)
 '''
 while True:
 	print('1 - удар рукой({0}%), 2 - удар ногой({1}%), 3 - блок({2}%), 4 - ожидать, q - выйти'.format(p1.precision_punch, p1.precision_kick, p1.precision_block))
