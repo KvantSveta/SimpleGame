@@ -15,6 +15,9 @@ def quit():
 window = Tk()
 window.title('Simple Game')
 
+image = PhotoImage(file = '/home/jd/start.gif')
+Label(window, image = image).pack()
+
 win1 = Toplevel()
 lab1 = Label(win1, text = 'Здесь будет обображена стратегия бота')
 lab1.pack()
