@@ -11,11 +11,8 @@ def quit():
 	print('Hello, I must be going...')
 	#sys.exit()
 
-
 window = Tk()
 window.title('Simple Game')
-
-
 
 win1 = Toplevel()
 lab1 = Label(win1, text = 'Здесь будет обображена стратегия бота')
@@ -45,7 +42,7 @@ label5.pack(anchor = W)
 label6 = Label(frame, text = 'Endurance'.ljust(length) + '[' + str(p1.endurance).rjust(2) + ' ]' + tab + 'Endurance'.ljust(length) + '[' + str(p2.endurance).rjust(2) + ' ]')
 label6.pack(anchor = W)
 
-image = PhotoImage(file = '/home/jd/start.gif')
+image = PhotoImage(file = './Image/' + 'person_start.gif')
 Label(frame, image = image).pack()
 
 button1 = Button(frame, text = 'Удар рукой', command = p1.punch(p2))
