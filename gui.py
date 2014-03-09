@@ -43,19 +43,21 @@ Label(window, image = image).grid()
 frame_2 = Frame()
 frame_2.grid()
 
-button1 = Button(frame_2, text = 'Удар рукой', command = p1.punch(p2))
+width_button = 12
+
+button1 = Button(frame_2, text = 'Удар рукой', width = width_button, command = p1.punch(p2))
 button1.grid(row = 0, column = 0)
 
-button2 = Button(frame_2, text = 'Удар ногой', command = p1.kick(p2))
+button2 = Button(frame_2, text = 'Удар ногой', width = width_button, command = p1.kick(p2))
 button2.grid(row = 0, column = 1)
 
-button3 = Button(frame_2, text = '   Блок   ', command = p1.block())
+button3 = Button(frame_2, text = 'Блок', width = width_button, command = p1.block())
 button3.grid(row = 0, column = 2)
 
-button4 = Button(frame_2, text = '   Ждать  ', command = p1.wait())
+button4 = Button(frame_2, text = 'Ждать', width = width_button, command = p1.wait())
 button4.grid(row = 0, column = 3)
 
-button5 = Button(frame_2, text = '   Выйти  ', command = frame_2.quit)
+button5 = Button(frame_2, text = 'Выйти', width = width_button, command = frame_2.quit)
 button5.grid(row = 0, column = 4)
 
 window.mainloop()
