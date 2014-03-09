@@ -28,8 +28,14 @@ Label(window, image = image, width = image.width(), height = image.height()).gri
 frame_2 = Frame(window)
 frame_2.grid()
 
+def p1_punch():
+	p1.punch(p2)
+
+def p1_kick():
+	p1.kick(p2)
+
 list_text = ['Удар рукой','Удар ногой', 'Блок', 'Ждать', 'Выйти']
-list_command = [p1.punch(p2), p1.kick(p2), p1.block(), p1.wait(), window.quit]
+list_command = [p1_punch, p1_kick, p1.block, p1.wait, window.quit]
 
 for i in range(5):
 	Button(frame_2, text = list_text[i], width = 12, command = list_command[i]).grid(row = 0, column = i)
