@@ -3,199 +3,190 @@
 __author__ = 'j.d.'
 
 from tkinter import *
-from main import *
-from os import _exit
+from classperson import Person
 
-class Gui():
-	def __init__(self):
-		self.window = Tk()
-		self.window.title('Simple Game')
+p1 = Person('John', 1, 70, 3, 5, 13)
+p2 = Person('Bot', 1, 70, 3, 5, 13)
 
-		self.frame_1 = Frame(self.window)
-		self.frame_1.grid()
+def match():
+	global image
 
-		self.list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick          ', 'Endurance']
-		self.list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(p1.precision) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
-		self.list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
-
-		self.list_label = []
-
-		for i in range(30):
-			self.list_label.append(0)
-
-		j = 0
-
-		for i in range(6):
-			self.list_label[j] = Label(self.frame_1, text = self.list_1[i], width = 9)
-			self.list_label[j].grid(row = i, column = 0)
-			j += 1
-			self.list_label[j] = Label(self.frame_1, text = self.list_2[i], width = 9)
-			self.list_label[j].grid(row = i, column = 1)
-			j += 1
-			self.list_label[j] = Label(self.frame_1, width = 40)
-			self.list_label[j].grid(row = i, column = 2)
-			j += 1
-			self.list_label[j] = Label(self.frame_1, text = self.list_1[i], width = 9)
-			self.list_label[j].grid(row = i, column = 3)
-			j += 1
-			self.list_label[j] = Label(self.frame_1, text = self.list_3[i], width = 9)
-			self.list_label[j].grid(row = i, column = 4)
-			j += 1
-
-		self.frame_2 = Frame(self.window)
-		self.frame_2.grid()
-
-		self.image = PhotoImage(file = './Image/' + 'person_start.gif')
-		self.label = Label(self.frame_2, image = self.image)
-		self.label.grid()
-
-		self.frame_3 = Frame(self.window)
-		self.frame_3.grid()
-
-		self.list_text = ['Удар рукой','Удар ногой', 'Блок', 'Ждать', 'Выйти']
-		self.list_command = [self.p1_punch, self.p1_kick, self.p1_block, self.p1_wait, self.window.quit]
-
-		for i in range(5):
-			Button(self.frame_3, text = self.list_text[i], width = 12, command = self.list_command[i]).grid(row = 0, column = i)
-
-	def p1_punch(self):
-		life_p2 = p2.health
-
-		p1.punch(p2)
-
-		if p2.endurance >= 4:
-			p2.kick(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_punch_kick.gif')
-
-		elif p2.endurance >= 3:
-			p2.punch(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_punch_punch.gif')
-
+	if p1.health == 0 or p2.health == 0:
+		if p1.health == 0 and p2.health == 0:
+			image = PhotoImage(file = './Image/' + 'person_death_death.gif')
+		elif p1.health == 0:
+			image = PhotoImage(file = './Image/' + 'person_death_win.gif')
 		else:
-			if p2.block():
-				p2.health = life_p2
-			self.image = PhotoImage(file = './Image/' + 'person_punch_block.gif')
+			image = PhotoImage(file = './Image/' + 'person_win_death.gif')
+		label['image'] = image
 
-		self.list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-		self.list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-		self.list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-		self.list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+		button.grab_set()
 
-		self.label['image'] = self.image
+def p1_punch():
+	global image
 
-		if p1.health == 0 or p2.health == 0:
-			if p1.health == 0 and p2.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_death.gif')
-			elif p1.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_win.gif')
-			else:
-				self.image = PhotoImage(file = './Image/' + 'person_win_death.gif')
-			self.label['image'] = self.image
-			sleep(2)
+	life_p2 = p2.health
 
-	def p1_kick(self):
-		life_p2 = p2.health
+	p1.punch(p2)
 
-		p1.kick(p2)
+	if p2.endurance >= 4:
+		p2.kick(p1)
+		image = PhotoImage(file = './Image/' + 'person_punch_kick.gif')
 
-		if p2.endurance >= 4:
-			p2.kick(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_kick_kick.gif')
+	elif p2.endurance >= 3:
+		p2.punch(p1)
+		image = PhotoImage(file = './Image/' + 'person_punch_punch.gif')
 
-		elif p2.endurance >= 3:
-			p2.punch(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_kick_punch.gif')
+	else:
+		if p2.block():
+			p2.health = life_p2
+		image = PhotoImage(file = './Image/' + 'person_punch_block.gif')
 
-		else:
-			if p2.block():
-				p2.health = life_p2
-			self.image = PhotoImage(file = './Image/' + 'person_kick_block.gif')
+	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
+	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
+	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
+	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
-		self.list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-		self.list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-		self.list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-		self.list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	label['image'] = image
 
-		self.label['image'] = self.image
+	match()
 
-		if p1.health == 0 or p2.health == 0:
-			if p1.health == 0 and p2.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_death.gif')
-			elif p1.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_win.gif')
-			else:
-				self.image = PhotoImage(file = './Image/' + 'person_win_death.gif')
-			self.label['image'] = self.image
-			sleep(2)		
+def p1_kick():
+	global image
 
-	def p1_block(self):
-		life_p1 = p1.health
+	life_p2 = p2.health
 
-		action = p1.block()
+	p1.kick(p2)
 
-		if p2.endurance >= 4:
-			p2.kick(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_block_kick.gif')
-			
-		elif p2.endurance >= 3:
-			p2.punch(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_block_punch.gif')
+	if p2.endurance >= 4:
+		p2.kick(p1)
+		image = PhotoImage(file = './Image/' + 'person_kick_kick.gif')
 
-		else:
-			p2.block()
-			self.image = PhotoImage(file = './Image/' + 'person_block_block.gif')
+	elif p2.endurance >= 3:
+		p2.punch(p1)
+		image = PhotoImage(file = './Image/' + 'person_kick_punch.gif')
 
-		if action == 3:
-			p1.health = life_p1
+	else:
+		if p2.block():
+			p2.health = life_p2
+		image = PhotoImage(file = './Image/' + 'person_kick_block.gif')
 
-		self.list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-		self.list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-		self.list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-		self.list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
+	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
+	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
+	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
-		self.label['image'] = self.image
+	label['image'] = image
 
-		if p1.health == 0 or p2.health == 0:
-			if p1.health == 0 and p2.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_death.gif')
-			elif p1.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_win.gif')
-			else:
-				self.image = PhotoImage(file = './Image/' + 'person_win_death.gif')
-			self.label['image'] = self.image
-			sleep(2)
+	match()
 
-	def p1_wait(self):
-		p1.wait()
+def p1_block():
+	global image
 
-		if p2.endurance >= 4:
-			p2.kick(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_wait_kick.gif')
+	life_p1 = p1.health
 
-		elif p2.endurance >= 3:
-			p2.punch(p1)
-			self.image = PhotoImage(file = './Image/' + 'person_wait_punch.gif')
+	action = p1.block()
 
-		else:
-			p2.block()
-			self.image = PhotoImage(file = './Image/' + 'person_wait_block.gif')
+	if p2.endurance >= 4:
+		p2.kick(p1)
+		image = PhotoImage(file = './Image/' + 'person_block_kick.gif')
+		
+	elif p2.endurance >= 3:
+		p2.punch(p1)
+		image = PhotoImage(file = './Image/' + 'person_block_punch.gif')
 
-		self.list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-		self.list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-		self.list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-		self.list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3)	 + ' ]'
+	else:
+		p2.block()
+		image = PhotoImage(file = './Image/' + 'person_block_block.gif')
 
-		self.label['image'] = self.image
+	if action == 3:
+		p1.health = life_p1
 
-		if p1.health == 0 or p2.health == 0:
-			if p1.health == 0 and p2.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_death.gif')
-			elif p1.health == 0:
-				self.image = PhotoImage(file = './Image/' + 'person_death_win.gif')
-			else:
-				self.image = PhotoImage(file = './Image/' + 'person_win_death.gif')
-			self.label['image'] = self.image
-			sleep(2)
+	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
+	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
+	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
+	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
-gui = Gui()
-gui.window.mainloop()
+	label['image'] = image
+
+	match()
+
+def p1_wait():
+	global image
+
+	p1.wait()
+
+	if p2.endurance >= 4:
+		p2.kick(p1)
+		image = PhotoImage(file = './Image/' + 'person_wait_kick.gif')
+
+	elif p2.endurance >= 3:
+		p2.punch(p1)
+		image = PhotoImage(file = './Image/' + 'person_wait_punch.gif')
+
+	else:
+		p2.block()
+		image = PhotoImage(file = './Image/' + 'person_wait_block.gif')
+
+	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
+	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
+	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
+	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3)	 + ' ]'
+
+	label['image'] = image
+
+	match()
+
+window = Tk()
+window.title('Simple Game')
+
+frame_1 = Frame(window)
+frame_1.grid()
+
+list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick          ', 'Endurance']
+list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(p1.precision) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
+list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
+
+list_label = []
+
+for i in range(30):
+	list_label.append(0)
+
+j = 0
+
+for i in range(6):
+	list_label[j] = Label(frame_1, text = list_1[i], width = 9)
+	list_label[j].grid(row = i, column = 0)
+	j += 1
+	list_label[j] = Label(frame_1, text = list_2[i], width = 9)
+	list_label[j].grid(row = i, column = 1)
+	j += 1
+	list_label[j] = Label(frame_1, width = 40)
+	list_label[j].grid(row = i, column = 2)
+	j += 1
+	list_label[j] = Label(frame_1, text = list_1[i], width = 9)
+	list_label[j].grid(row = i, column = 3)
+	j += 1
+	list_label[j] = Label(frame_1, text = list_3[i], width = 9)
+	list_label[j].grid(row = i, column = 4)
+	j += 1
+
+frame_2 = Frame(window)
+frame_2.grid()
+
+image = PhotoImage(file = './Image/' + 'person_start.gif')
+label = Label(frame_2, image = image)
+label.grid()
+
+frame_3 = Frame(window)
+frame_3.grid()
+
+list_text = ['Удар рукой','Удар ногой', 'Блок', 'Ждать', 'Выйти']
+list_command = [p1_punch, p1_kick, p1_block, p1_wait, window.quit]
+
+for i in range(4):
+	Button(frame_3, text = list_text[i], width = 12, command = list_command[i]).grid(row = 0, column = i)
+button = Button(frame_3, text = list_text[4], width = 12, command = list_command[4])
+button.grid(row = 0, column = 4)
+
+window.mainloop()
