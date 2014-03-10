@@ -28,6 +28,8 @@ def event(p1, p2):
 def event_2(p2, p1):
 	if p2.endurance >= 4:
 		return p2.kick(p1)
+	elif p2.endurance >= 3:
+		return p2.punch(p1)
 	else:
 		return p2.block()
 
