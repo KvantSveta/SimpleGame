@@ -31,8 +31,8 @@ class Gui():
 		self.frame_2.grid()
 
 		self.image = PhotoImage(file = './Image/' + 'person_start.gif')
-		self.l = Label(self.frame_2, image = self.image)
-		self.l.grid()
+		self.label = Label(self.frame_2, image = self.image)
+		self.label.grid()
 
 		self.frame_3 = Frame(self.window)
 		self.frame_3.grid()
@@ -59,8 +59,7 @@ class Gui():
 				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 3)
 				Label(self.frame_1, text = self.list_3[i], width = 9).grid(row = i, column = 4)
 
-			self.l.Label(self.frame_2, image = self.image)
-			self.l.grid()
+			self.label['image'] = self.image
 
 		def p1_kick():
 			p1.kick(p2)
@@ -84,10 +83,58 @@ class Gui():
 				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 3)
 				Label(self.frame_1, text = self.list_3[i], width = 9).grid(row = i, column = 4)
 
-			Label(self.frame_2, image = self.image).grid()
+			self.label['image'] = self.image
+
+		def p1_block():
+			p1.block()
+
+			if p2.endurance >= 4:
+				p2.kick(p1)
+				self.image = PhotoImage(file = './Image/' + 'person_block_kick.gif')
+
+			elif p2.endurance >= 3:
+				p2.punch(p1)
+				self.image = PhotoImage(file = './Image/' + 'person_block_punch.gif')
+
+			else:
+				p2.block()
+				self.image = PhotoImage(file = './Image/' + 'person_block_block.gif')
+
+			for i in [1, 5]:
+				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 0)
+				Label(self.frame_1, text = self.list_2[i], width = 9).grid(row = i, column = 1)
+				Label(self.frame_1, width = 40).grid(row = i, column = 2)
+				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 3)
+				Label(self.frame_1, text = self.list_3[i], width = 9).grid(row = i, column = 4)
+
+			self.label['image'] = self.image
+
+		def p1_wait():
+			p1.wait()
+
+			if p2.endurance >= 4:
+				p2.kick(p1)
+				self.image = PhotoImage(file = './Image/' + 'person_wait_kick.gif')
+
+			elif p2.endurance >= 3:
+				p2.punch(p1)
+				self.image = PhotoImage(file = './Image/' + 'person_wait_punch.gif')
+
+			else:
+				p2.block()
+				self.image = PhotoImage(file = './Image/' + 'person_wait_block.gif')
+
+			for i in [1, 5]:
+				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 0)
+				Label(self.frame_1, text = self.list_2[i], width = 9).grid(row = i, column = 1)
+				Label(self.frame_1, width = 40).grid(row = i, column = 2)
+				Label(self.frame_1, text = self.list_1[i], width = 9).grid(row = i, column = 3)
+				Label(self.frame_1, text = self.list_3[i], width = 9).grid(row = i, column = 4)
+
+			self.label['image'] = self.image
 
 		self.list_text = ['Удар рукой','Удар ногой', 'Блок', 'Ждать', 'Выйти']
-		self.list_command = [p1_punch, p1_kick, p1.block, p1.wait, self.window.quit]
+		self.list_command = [p1_punch, p1_kick, p1_block, p1_wait, self.window.quit]
 
 		for i in range(5):
 			Button(self.frame_3, text = self.list_text[i], width = 12, command = self.list_command[i]).grid(row = 0, column = i)
