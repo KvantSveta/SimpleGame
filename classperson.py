@@ -48,10 +48,10 @@ class Person:
 		self.endurance += 1
 		if randint(0, 100) < self.precision_block:
 			print('Блок выполнен!')
-			return 0
+			return 3
 		else:
 			print('Блок не выполнен!')
-			return 3
+			return 0
 
 	def wait(self):
 		print('Ожидание!')

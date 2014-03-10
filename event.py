@@ -2,7 +2,7 @@ from random import randint
 from art import *
 from os import _exit, system
 from time import sleep
-
+'''
 def event(p1, p2):
 	while True:
 		action = input('Действие: ')
@@ -49,3 +49,4 @@ def match(p1, p2):
 			print(string_win, ' ' * 44, string_death)
 			print(person_win_death)
 		_exit(0)
+'''
