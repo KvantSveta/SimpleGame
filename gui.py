@@ -22,6 +22,12 @@ def match():
 
 		button.grab_set()
 
+def menu_change():
+	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
+	list_label[1]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
+	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
+	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+
 def p1_punch():
 	global image
 
@@ -42,10 +48,7 @@ def p1_punch():
 			p2.health = life_p2
 		image = PhotoImage(file = './Image/' + 'person_punch_block.gif')
 
-	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	menu_change()
 
 	label['image'] = image
 
@@ -71,10 +74,7 @@ def p1_kick():
 			p2.health = life_p2
 		image = PhotoImage(file = './Image/' + 'person_kick_block.gif')
 
-	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	menu_change()
 
 	label['image'] = image
 
@@ -102,10 +102,7 @@ def p1_block():
 	if action == 3:
 		p1.health = life_p1
 
-	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	menu_change()
 
 	label['image'] = image
 
@@ -128,10 +125,7 @@ def p1_wait():
 		p2.block()
 		image = PhotoImage(file = './Image/' + 'person_wait_block.gif')
 
-	list_label[6]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-	list_label[9]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-	list_label[26]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-	list_label[29]['text'] = '[  ' + str(p2.endurance).rjust(3)	 + ' ]'
+	menu_change()
 
 	label['image'] = image
 
@@ -147,29 +141,21 @@ list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick 
 list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(p1.precision) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
 list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
 
-list_label = []
+list_label = [''] * 4 
 
-for i in range(30):
-	list_label.append(0)
+for i in range(6):	
+	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 0)
 
-j = 0
+	if i in [1, 5]:
+		k = 1 % i
+		list_label[k] = Label(frame_1, text = list_2[i], width = 9)
+		list_label[k].grid(row = i, column = 1)
+	else:
+		Label(frame_1, text = list_2[i], width = 9).grid(row = i, column = 1)
 
-for i in range(6):
-	list_label[j] = Label(frame_1, text = list_1[i], width = 9)
-	list_label[j].grid(row = i, column = 0)
-	j += 1
-	list_label[j] = Label(frame_1, text = list_2[i], width = 9)
-	list_label[j].grid(row = i, column = 1)
-	j += 1
-	list_label[j] = Label(frame_1, width = 40)
-	list_label[j].grid(row = i, column = 2)
-	j += 1
-	list_label[j] = Label(frame_1, text = list_1[i], width = 9)
-	list_label[j].grid(row = i, column = 3)
-	j += 1
-	list_label[j] = Label(frame_1, text = list_3[i], width = 9)
-	list_label[j].grid(row = i, column = 4)
-	j += 1
+	Label(frame_1, width = 40).grid(row = i, column = 2)
+	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 3)
+	Label(frame_1, text = list_3[i], width = 9).grid(row = i, column = 4)
 
 frame_2 = Frame(window)
 frame_2.grid()
@@ -186,6 +172,7 @@ list_command = [p1_punch, p1_kick, p1_block, p1_wait, window.quit]
 
 for i in range(4):
 	Button(frame_3, text = list_text[i], width = 12, command = list_command[i]).grid(row = 0, column = i)
+
 button = Button(frame_3, text = list_text[4], width = 12, command = list_command[4])
 button.grid(row = 0, column = 4)
 
