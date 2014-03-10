@@ -147,7 +147,7 @@ for i in range(6):
 	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 0)
 
 	if i in [1, 5]:
-		k = 1 % i
+		k = 2 % i
 		list_label[k] = Label(frame_1, text = list_2[i], width = 9)
 		list_label[k].grid(row = i, column = 1)
 	else:
@@ -155,7 +155,13 @@ for i in range(6):
 
 	Label(frame_1, width = 40).grid(row = i, column = 2)
 	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 3)
-	Label(frame_1, text = list_3[i], width = 9).grid(row = i, column = 4)
+
+	if i in [1, 5]:
+		k = (2 % i) + 1
+		list_label[k] = Label(frame_1, text = list_3[i], width = 9)
+		list_label[k].grid(row = i, column = 4)
+	else:
+		Label(frame_1, text = list_3[i], width = 9).grid(row = i, column = 4)
 
 frame_2 = Frame(window)
 frame_2.grid()
