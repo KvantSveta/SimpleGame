@@ -5,8 +5,10 @@ __author__ = 'j.d.'
 from os import system
 
 person = [
-	'p1_start', 'p2_start', 'p1_punch',	'p2_punch', 'p1_kick', 'p2_kick', 'p1_block',
-	'p2_block', 'p1_wait', 'p2_wait', 'p1_win', 'p2_win', 'p1_death', 'p2_death'
+	'person_punch_punch', 'person_punch_kick', 'person_punch_block', 'person_punch_wait',
+	'person_kick_punch', 'person_kick_kick', 'person_kick_block', 'person_kick_wait',
+	'person_block_punch', 'person_block_kick', 'person_block_block', 'person_block_wait',
+	'person_wait_punch', 'person_wait_kick', 'person_wait_block', 'person_wait_wait'
 ]
 
 for i in person:
