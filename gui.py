@@ -4,11 +4,14 @@ __author__ = 'j.d.'
 
 from tkinter import *
 from classperson import Person
+from time import sleep
 
-p1 = Person('John', 1, 70, 3, 5, 13)
+p1 = Person('John', 15, 70, 3, 5, 13)
 p2 = Person('Bot', 1, 70, 3, 5, 13)
 
 def match():
+	sleep(2)
+
 	global image
 
 	if p1.health == 0 or p2.health == 0:
@@ -51,7 +54,8 @@ def p1_punch():
 	menu_change()
 
 	label['image'] = image
-
+	label.update()
+	
 	match()
 
 def p1_kick():
@@ -77,6 +81,7 @@ def p1_kick():
 	menu_change()
 
 	label['image'] = image
+	label.update()
 
 	match()
 
@@ -105,6 +110,7 @@ def p1_block():
 	menu_change()
 
 	label['image'] = image
+	label.update()
 
 	match()
 
@@ -128,6 +134,7 @@ def p1_wait():
 	menu_change()
 
 	label['image'] = image
+	label.update()
 
 	match()
 
