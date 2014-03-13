@@ -14,6 +14,8 @@ def match():
 	global image_2
 
 	if p1.health == 0 or p2.health == 0:
+		button.grab_set()
+
 		if p1.health == 0 and p2.health == 0:
 			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
@@ -28,10 +30,6 @@ def match():
 
 		label_1['image'] = image_1
 		label_2['image'] = image_2
-		label_1.update()
-		label_2.update()
-
-		button.grab_set()
 
 def menu_change():
 	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
@@ -174,7 +172,7 @@ list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]'
 
 list_label = [''] * 4 
 
-for i in range(6):	
+for i in range(6):
 	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 0)
 
 	if i in [1, 5]:
