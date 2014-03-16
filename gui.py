@@ -29,7 +29,7 @@ def match():
 		sleep(2)
 
 		label_1['image'] = image_1
-		label_2['image'] = image_2
+		label_2['image'] = image_2	
 
 def menu_change():
 	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
@@ -37,87 +37,67 @@ def menu_change():
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
+def p2_action(life_p2):
+	global image_2
+
+	if p2.endurance >= 4:
+		p2.kick(p1)
+		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+
+	elif p2.endurance >= 3:
+		p2.punch(p1)
+		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
+
+	else:
+		if p2.block():
+			p2.health = life_p2
+		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+
+	label_2['image'] = image_2
+	label_2.update()
+
 def p1_punch():
 	global image_1
-	global image_2
 
 	life_p2 = p2.health
 
 	p1.punch(p2)
 
-	if p2.endurance >= 4:
-		p2.kick(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-
-	elif p2.endurance >= 3:
-		p2.punch(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-
-	else:
-		if p2.block():
-			p2.health = life_p2
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	p2_action(life_p2)
 
 	menu_change()
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
 	label_1['image'] = image_1
-	label_2['image'] = image_2
 	label_1.update()
-	label_2.update()
 	
 	match()
 
 def p1_kick():
 	global image_1
-	global image_2
 
 	life_p2 = p2.health
 
 	p1.kick(p2)
 
-	if p2.endurance >= 4:
-		p2.kick(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-
-	elif p2.endurance >= 3:
-		p2.punch(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-
-	else:
-		if p2.block():
-			p2.health = life_p2
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	p2_action(life_p2)
 
 	menu_change()
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
 	label_1['image'] = image_1
-	label_2['image'] = image_2
 	label_1.update()
-	label_2.update()
 
 	match()
 
 def p1_block():
 	global image_1
-	global image_2
 
 	life_p1 = p1.health
 
 	action = p1.block()
 
-	if p2.endurance >= 4:
-		p2.kick(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-		
-	elif p2.endurance >= 3:
-		p2.punch(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-
-	else:
-		p2.block()
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	p2_action(p2.health)
 
 	if action == 3:
 		p1.health = life_p1
@@ -126,37 +106,22 @@ def p1_block():
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_block.gif')
 	label_1['image'] = image_1
-	label_2['image'] = image_2
 	label_1.update()
-	label_2.update()
 
 	match()
 
 def p1_wait():
 	global image_1
-	global image_2
 
 	p1.wait()
 
-	if p2.endurance >= 4:
-		p2.kick(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-
-	elif p2.endurance >= 3:
-		p2.punch(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-
-	else:
-		p2.block()
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	p2_action(p2.health)
 
 	menu_change()
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
 	label_1['image'] = image_1
-	label_2['image'] = image_2
 	label_1.update()
-	label_2.update()
 
 	match()
 
