@@ -29,7 +29,7 @@ def match():
 		sleep(2)
 
 		label_1['image'] = image_1
-		label_2['image'] = image_2	
+		label_2['image'] = image_2
 
 def menu_change():
 	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
@@ -135,7 +135,7 @@ list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick 
 list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(p1.precision) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
 list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
 
-list_label = [''] * 4 
+list_label = [''] * 4
 
 for i in range(6):
 	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 0)
