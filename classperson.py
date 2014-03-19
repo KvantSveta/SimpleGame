@@ -25,12 +25,12 @@ class Person:
 			return 1
 		else:
 			print('Для действия не хватает энергии')
-			self.endurance += 5	
+			self.endurance += 5
 			return 4
-	
+
 	def kick(self, enemy):
 		if self.endurance  >= 4:
-			self.endurance -= 4		
+			self.endurance -= 4
 			if randint(0, 100) < self.precision_kick:
 				print('Удар ногой выполнен!')
 				enemy.health -= self.leg
@@ -55,5 +55,5 @@ class Person:
 
 	def wait(self):
 		print('Ожидание!')
-		self.endurance += 5	
+		self.endurance += 5
 		return 4

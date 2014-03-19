@@ -43,11 +43,9 @@ def p2_action(life_p2):
 	if p2.endurance >= 4:
 		p2.kick(p1)
 		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-
 	elif p2.endurance >= 3:
 		p2.punch(p1)
 		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-
 	else:
 		if p2.block():
 			p2.health = life_p2
@@ -70,7 +68,7 @@ def p1_punch():
 	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
 	label_1['image'] = image_1
 	label_1.update()
-	
+
 	match()
 
 def p1_kick():
@@ -170,7 +168,7 @@ label_2.grid(row = 0, column = 1)
 frame_3 = Frame(window)
 frame_3.grid()
 
-list_text = ['Удар рукой','Удар ногой', 'Блок', 'Ждать', 'Выйти']
+list_text = ['Удар рукой', 'Удар ногой', 'Блок', 'Ждать', 'Выйти']
 list_command = [p1_punch, p1_kick, p1_block, p1_wait, window.quit]
 
 for i in range(4):
