@@ -32,7 +32,7 @@ label_list = [[''] * 4] * 4
 
 for i in range(4):
 	for j in range(4):
-		label_list[i][j] = Label(frame_4, text = '0', width = 4, height = 4)
+		label_list[i][j] = Label(frame_4, text = '0', width = 8, height = 4)
 		label_list[i][j].grid(row = i, column = j)
 
 window.mainloop()
