@@ -45,7 +45,8 @@ class Person:
 			return 4
 
 	def block(self):
-		self.endurance += 1
+		if self.endurance < 13:
+			self.endurance += 1
 		if random() < self.precision_block:
 			print('Блок выполнен!')
 			return 3

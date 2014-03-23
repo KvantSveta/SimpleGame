@@ -10,7 +10,7 @@ from sys import argv
 p1 = Person('John', 13, 0.7, 3, 5, 13)
 p2 = Person('Bot', 13, 0.7, 3, 5, 13)
 
-def update():
+def update_logic():
 	list_function = [
 			action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2),
 			action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2),
@@ -48,6 +48,11 @@ def menu_change():
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
+	try:
+		update_logic()
+	except NameError:
+		print('Исключение так как не используется опция -e')
+	
 def p2_action(life_p2):
 	global image_2
 
@@ -80,8 +85,6 @@ def p1_punch():
 	label_1['image'] = image_1
 	label_1.update()
 
-	update()
-
 	match()
 
 def p1_kick():
@@ -98,8 +101,6 @@ def p1_kick():
 	image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
 	label_1['image'] = image_1
 	label_1.update()
-
-	update()
 
 	match()
 
@@ -121,8 +122,6 @@ def p1_block():
 	label_1['image'] = image_1
 	label_1.update()
 
-	update()
-
 	match()
 
 def p1_wait():
@@ -137,8 +136,6 @@ def p1_wait():
 	image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
 	label_1['image'] = image_1
 	label_1.update()
-
-	update()
 
 	match()
 
