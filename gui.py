@@ -12,27 +12,33 @@ p2 = Person('Bot', 13, 0.7, 3, 5, 13)
 
 def update_logic():
 	list_function = [
-		action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2),
-		action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2),
-		action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2),
-		action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2),
-		]
+		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
+		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
+		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
+		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
+	]
 
-	for index, function in enumerate(list_function):
-		label_list[index]['text'] = format(function, '.2f')
+	for i in range(4):
+		for j in range(4):
+			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
 
 	min_max = [''] * 4
 
 	for i in range(4):
-		min_max[i] = max(list_function[i], list_function[i + 4], list_function[i + 8], list_function[i + 12])
+		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 
 	min_index = 0
-	for i in range(1, 4):	
+	for i in range(1, 4):
 		if min_max[min_index] > min_max[i]:
 			min_index = i
 
-	return(min_index)
+	for i in range(4):
+		if i == min_index:
+			logic_label[i]['bg'] = 'red'
+		else:
+			logic_label[i]['bg'] = '#d9d9d9'	
 
+	return(min_index)
 
 def match():
 	global image_1
@@ -61,13 +67,13 @@ def menu_change():
 	list_label[1]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
-	
+
 def p2_action(life_p2):
 	global image_2
 
 	action = update_logic()
 
-	if  action == 0:
+	if action == 0:
 		p2.punch(p1)
 		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
 	elif action == 1:
@@ -198,53 +204,66 @@ for index, action in enumerate(['Удар рукой', 'Удар ногой', '�
 button = Button(frame_3, text = 'Выйти', width = 12, command = window.quit)
 button.grid(row = 0, column = 4)
 
-if len(argv) > 1:
-	if argv[1] == '-e' or argv[1] == '--extended':
-		from logicbot import *
+if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
+	from logicbot import *
 
-		super_frame = LabelFrame(window)
-		super_frame.grid()
+	super_frame = LabelFrame(window)
+	super_frame.grid()
 
-		frame1 = Frame(super_frame, width = 12, height = 12)
-		frame1.grid(row = 0, column = 0)
+	frame1 = Frame(super_frame, width = 12, height = 12)
+	frame1.grid(row = 0, column = 0)
 
-		image_ = PhotoImage(file = './' + 'python.gif')
-		Label(frame1, image = image_, width = 66, height = 66).grid()
+	image_ = PhotoImage(file = './' + 'python.gif')
+	Label(frame1, image = image_, width = 66, height = 66).grid()
 
-		frame2 = Frame(super_frame)
-		frame2.grid(row = 0, column = 1)
+	frame2 = Frame(super_frame)
+	frame2.grid(row = 0, column = 1)
 
-		Label(frame2, text = 'Bot').grid(row = 0, columnspan = 4)
-		for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-			Label(frame2, text = action, width = 10, height = 3).grid(row = 1, column = index)
+	Label(frame2, text = 'Bot').grid(row = 0, columnspan = 4)
+	logic_label = [''] * 4
+	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+		logic_label[index] = Label(frame2, text = action, width = 10, height = 3)
+		logic_label[index].grid(row = 1, column = index)
 
-		frame3 = Frame(super_frame)
-		frame3.grid(row = 1, column = 0)
+	frame3 = Frame(super_frame)
+	frame3.grid(row = 1, column = 0)
 
-		Label(frame3, text = 'John').grid(rowspan = 4, column = 0)
-		for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-			Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
+	Label(frame3, text = 'John').grid(rowspan = 4, column = 0)
+	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+		Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
 
-		frame4 = Frame(super_frame)
-		frame4.grid(row = 1, column = 1)
+	frame4 = Frame(super_frame)
+	frame4.grid(row = 1, column = 1)
 
-		label_list = [''] * 16
+	label_list = [[''] * 4] * 4
 
-		for i in range(4):
-			for j in range(4):
-				k = i * 4 + j
-				label_list[k] = Label(frame4, text = '0', width = 8, height = 4)
-				label_list[k].grid(row = i, column = j)
+	list_function = [
+		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
+		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
+		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
+		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
+	]
 
-		list_function = [
-			action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2),
-			action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2),
-			action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2),
-			action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2),
-			]
+	for i in range(4):
+		for j in range(4):
+			label_list[i][j] = Label(frame4, width = 8, height = 4)
+			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
+			label_list[i][j].grid(row = i, column = j)
 
-		for index, function in enumerate(list_function):
-			label_list[index]['text'] = format(function, '.2f')
-			label_list[index].update
+	min_max = [''] * 4
+
+	for i in range(4):
+		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
+
+	min_index = 0
+	for i in range(1, 4):
+		if min_max[min_index] > min_max[i]:
+			min_index = i
+
+	for i in range(4):
+		if i == min_index:
+			logic_label[i]['bg'] = 'red'
+		else:
+			logic_label[i]['bg'] = '#d9d9d9'
 
 window.mainloop()
