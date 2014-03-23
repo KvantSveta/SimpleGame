@@ -12,13 +12,27 @@ p2 = Person('Bot', 13, 0.7, 3, 5, 13)
 
 def update_logic():
 	list_function = [
-			action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2),
-			action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2),
-			action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2),
-			action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2),
-			]
+		action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2),
+		action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2),
+		action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2),
+		action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2),
+		]
+
 	for index, function in enumerate(list_function):
 		label_list[index]['text'] = format(function, '.2f')
+
+	min_max = [''] * 4
+
+	for i in range(4):
+		min_max[i] = max(list_function[i], list_function[i + 4], list_function[i + 8], list_function[i + 12])
+
+	min_index = 0
+	for i in range(1, 4):	
+		if min_max[min_index] > min_max[i]:
+			min_index = i
+
+	return(min_index)
+
 
 def match():
 	global image_1
@@ -47,23 +61,25 @@ def menu_change():
 	list_label[1]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
-
-	if len(argv) == 2:
-		update_logic()
 	
 def p2_action(life_p2):
 	global image_2
 
-	if p2.endurance >= 4:
-		p2.kick(p1)
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif p2.endurance >= 3:
+	action = update_logic()
+
+	if  action == 0:
 		p2.punch(p1)
 		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	else:
+	elif action == 1:
+		p2.kick(p1)
+		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+	elif action == 2:
 		if p2.block():
 			p2.health = life_p2
 		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	else:
+		p2.wait()
+		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
 
 	label_2['image'] = image_2
 	label_2.update()

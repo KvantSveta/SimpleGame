@@ -25,7 +25,7 @@ class Person:
 			return 1
 		else:
 			print('Для действия не хватает энергии')
-			self.endurance += 5
+			self.endurance = 13
 			return 4
 
 	def kick(self, enemy):
@@ -41,7 +41,7 @@ class Person:
 			return 2
 		else:
 			print('Для действия не хватает энергии')
-			self.endurance += 5
+			self.endurance = 13
 			return 4
 
 	def block(self):
