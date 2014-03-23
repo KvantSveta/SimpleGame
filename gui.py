@@ -48,10 +48,8 @@ def menu_change():
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
-	try:
+	if len(argv) == 2:
 		update_logic()
-	except NameError:
-		print('Исключение так как не используется опция -e')
 	
 def p2_action(life_p2):
 	global image_2
