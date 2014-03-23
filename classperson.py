@@ -1,13 +1,13 @@
-from random import randint
+from random import random
 
 class Person:
 	def __init__(self, name, health, precision, hand, leg, endurance):
 		self.name = name
 		self.health = health
 		self.precision = precision
-		self.precision_punch = precision + 10
-		self.precision_kick = precision - 10
-		self.precision_block = precision + 20
+		self.precision_punch = precision + 0.1
+		self.precision_kick = precision - 0.1
+		self.precision_block = precision + 0.2
 		self.hand = hand
 		self.leg = leg
 		self.endurance = endurance
@@ -15,7 +15,7 @@ class Person:
 	def punch(self, enemy):
 		if self.endurance >= 3:
 			self.endurance -= 3
-			if randint(0, 100) < self.precision_punch:
+			if random() < self.precision_punch:
 				print('Удар рукой выполнен!')
 				enemy.health -= self.hand
 				if enemy.health < 0:
@@ -31,7 +31,7 @@ class Person:
 	def kick(self, enemy):
 		if self.endurance  >= 4:
 			self.endurance -= 4
-			if randint(0, 100) < self.precision_kick:
+			if random() < self.precision_kick:
 				print('Удар ногой выполнен!')
 				enemy.health -= self.leg
 				if enemy.health < 0:
@@ -46,7 +46,7 @@ class Person:
 
 	def block(self):
 		self.endurance += 1
-		if randint(0, 100) < self.precision_block:
+		if random() < self.precision_block:
 			print('Блок выполнен!')
 			return 3
 		else:

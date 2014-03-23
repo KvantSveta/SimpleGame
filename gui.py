@@ -6,8 +6,8 @@ from tkinter import *
 from classperson import Person
 from time import sleep
 
-p1 = Person('John', 15, 70, 3, 5, 13)
-p2 = Person('Bot', 1, 70, 3, 5, 13)
+p1 = Person('John', 15, 0.7, 3, 5, 13)
+p2 = Person('Bot', 1, 0.7, 3, 5, 13)
 
 def match():
 	global image_1
@@ -130,8 +130,8 @@ frame_1 = Frame(window)
 frame_1.grid()
 
 list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick          ', 'Endurance']
-list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(p1.precision) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
-list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(p2.precision) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
+list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(int(p1.precision * 100)) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
+list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(int(p2.precision * 100)) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
 
 list_label = [''] * 4
 
