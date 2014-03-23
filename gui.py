@@ -142,7 +142,6 @@ def p1_wait():
 
 	match()
 
-
 window = Tk()
 window.title('Simple Game')
 
@@ -160,11 +159,10 @@ Label(frame_1, text = p2.name, width = 9).grid(row = 0, column = 3)
 
 list_label[0] = Label(frame_1, text = '[  ' + str(p1.health) + ' ]', width = 9)
 list_label[0].grid(row = 1, column = 1)
-list_label[1] = Label(frame_1, text = '[  ' + str(p1.endurance) + ' ]', width = 9)
-list_label[1].grid(row = 2, column = 1)
-
-list_label[2] = Label(frame_1, text = '[  ' + str(p2.health) + ' ]', width = 9)
-list_label[2].grid(row = 1, column = 3)
+list_label[1] = Label(frame_1, text = '[  ' + str(p2.health) + ' ]', width = 9)
+list_label[1].grid(row = 1, column = 3)
+list_label[2] = Label(frame_1, text = '[  ' + str(p1.endurance) + ' ]', width = 9)
+list_label[2].grid(row = 2, column = 1)
 list_label[3] = Label(frame_1, text = '[  ' + str(p2.endurance) + ' ]', width = 9)
 list_label[3].grid(row = 2, column = 3)
 

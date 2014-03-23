@@ -55,5 +55,5 @@ class Person:
 
 	def wait(self):
 		print('Ожидание!')
-		self.endurance += 13
+		self.endurance = 13
 		return 4
