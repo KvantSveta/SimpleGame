@@ -7,7 +7,7 @@ from classperson import Person
 from time import sleep
 from sys import argv
 
-p1 = Person('John', 15, 0.7, 3, 5, 13)
+p1 = Person('John', 13, 0.7, 3, 5, 13)
 p2 = Person('Bot', 13, 0.7, 3, 5, 13)
 
 def update():
@@ -19,7 +19,6 @@ def update():
 			]
 	for index, function in enumerate(list_function):
 		label_list[index]['text'] = format(function, '.2f')
-		label_list[index].update
 
 def match():
 	global image_1
@@ -147,34 +146,77 @@ def p1_wait():
 window = Tk()
 window.title('Simple Game')
 
+frame_1 = LabelFrame(window)
+frame_1.grid()
+
+list_label = [''] * 4
+
+for index, item in enumerate(['Name        ', 'Health       ', 'Endurance']):
+	Label(frame_1, text = item, width = 9).grid(row = index, column = 0)
+	Label(frame_1, text = item, width = 9).grid(row = index, column = 2)
+
+Label(frame_1, text = p1.name, width = 9).grid(row = 0, column = 1)
+Label(frame_1, text = p2.name, width = 9).grid(row = 0, column = 3)
+
+list_label[0] = Label(frame_1, text = '[  ' + str(p1.health) + ' ]', width = 9)
+list_label[0].grid(row = 1, column = 1)
+list_label[1] = Label(frame_1, text = '[  ' + str(p1.endurance) + ' ]', width = 9)
+list_label[1].grid(row = 2, column = 1)
+
+list_label[2] = Label(frame_1, text = '[  ' + str(p2.health) + ' ]', width = 9)
+list_label[2].grid(row = 1, column = 3)
+list_label[3] = Label(frame_1, text = '[  ' + str(p2.endurance) + ' ]', width = 9)
+list_label[3].grid(row = 2, column = 3)
+
+frame_2 = LabelFrame(window)
+frame_2.grid()
+
+image_1 = PhotoImage(file = './Image/' + 'p1_start.gif')
+image_2 = PhotoImage(file = './Image/' + 'p2_start.gif')
+label_1 = Label(frame_2, image = image_1)
+label_2 = Label(frame_2, image = image_2)
+label_1.grid(row = 0, column = 0)
+label_2.grid(row = 0, column = 1)
+
+frame_3 = Frame(window)
+frame_3.grid()
+
+list_command = [p1_punch, p1_kick, p1_block, p1_wait]
+
+for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+	Button(frame_3, text = action, width = 12, command = list_command[index]).grid(row = 0, column = index)
+
+button = Button(frame_3, text = 'Выйти', width = 12, command = window.quit)
+button.grid(row = 0, column = 4)
+
 if len(argv) > 1:
 	if argv[1] == '-e' or argv[1] == '--extended':
 		from logicbot import *
 
-		toplevel = Toplevel()
-		toplevel.title('Logic Bot')
+		super_frame = LabelFrame(window)
+		super_frame.grid()
 
-		frame1 = Frame(toplevel, width = 12, height = 12)
+		frame1 = Frame(super_frame, width = 12, height = 12)
 		frame1.grid(row = 0, column = 0)
 
 		image_ = PhotoImage(file = './' + 'python.gif')
 		Label(frame1, image = image_, width = 66, height = 66).grid()
 
-		frame2 = Frame(toplevel)
+		frame2 = Frame(super_frame)
 		frame2.grid(row = 0, column = 1)
 
 		Label(frame2, text = 'Bot').grid(row = 0, columnspan = 4)
 		for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 			Label(frame2, text = action, width = 10, height = 3).grid(row = 1, column = index)
 
-		frame3 = Frame(toplevel)
+		frame3 = Frame(super_frame)
 		frame3.grid(row = 1, column = 0)
 
 		Label(frame3, text = 'John').grid(rowspan = 4, column = 0)
 		for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 			Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
 
-		frame4 = Frame(toplevel)
+		frame4 = Frame(super_frame)
 		frame4.grid(row = 1, column = 1)
 
 		label_list = [''] * 16
@@ -195,57 +237,5 @@ if len(argv) > 1:
 		for index, function in enumerate(list_function):
 			label_list[index]['text'] = format(function, '.2f')
 			label_list[index].update
-
-
-frame_1 = Frame(window)
-frame_1.grid()
-
-list_1 = ['Name        ', 'Health       ', 'Precision   ','Punch       ', 'Kick          ', 'Endurance']
-list_2 = [p1.name, '[  ' + str(p1.health) + ' ]', '[' + str(int(p1.precision * 100)) + '%]', '[   ' + str(p1.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
-list_3 = [p2.name, '[  ' + str(p2.health) + ' ]', '[' + str(int(p2.precision * 100)) + '%]', '[   ' + str(p2.hand) + '  ]', '[   ' + str(p1.leg) + '  ]', '[  ' + str(p1.endurance) + ' ]']
-
-list_label = [''] * 4
-
-for i in range(6):
-	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 0)
-
-	if i in [1, 5]:
-		k = 2 % i
-		list_label[k] = Label(frame_1, text = list_2[i], width = 9)
-		list_label[k].grid(row = i, column = 1)
-	else:
-		Label(frame_1, text = list_2[i], width = 9).grid(row = i, column = 1)
-
-	Label(frame_1, width = 40).grid(row = i, column = 2)
-	Label(frame_1, text = list_1[i], width = 9).grid(row = i, column = 3)
-
-	if i in [1, 5]:
-		k = (2 % i) + 1
-		list_label[k] = Label(frame_1, text = list_3[i], width = 9)
-		list_label[k].grid(row = i, column = 4)
-	else:
-		Label(frame_1, text = list_3[i], width = 9).grid(row = i, column = 4)
-
-frame_2 = Frame(window)
-frame_2.grid()
-
-image_1 = PhotoImage(file = './Image/' + 'p1_start.gif')
-image_2 = PhotoImage(file = './Image/' + 'p2_start.gif')
-label_1 = Label(frame_2, image = image_1)
-label_2 = Label(frame_2, image = image_2)
-label_1.grid(row = 0, column = 0)
-label_2.grid(row = 0, column = 1)
-
-frame_3 = Frame(window)
-frame_3.grid()
-
-list_text = ['Удар рукой', 'Удар ногой', 'Блок', 'Ждать', 'Выйти']
-list_command = [p1_punch, p1_kick, p1_block, p1_wait, window.quit]
-
-for i in range(4):
-	Button(frame_3, text = list_text[i], width = 12, command = list_command[i]).grid(row = 0, column = i)
-
-button = Button(frame_3, text = list_text[4], width = 12, command = list_command[4])
-button.grid(row = 0, column = 4)
 
 window.mainloop()
