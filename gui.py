@@ -28,6 +28,7 @@ def update_logic():
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 
 	min_index = 0
+
 	for i in range(1, 4):
 		if min_max[min_index] > min_max[i]:
 			min_index = i
@@ -36,11 +37,13 @@ def update_logic():
 		if i == min_index:
 			logic_label[i]['bg'] = 'red'
 		else:
-			logic_label[i]['bg'] = '#d9d9d9'	
+			logic_label[i]['bg'] = '#d9d9d9'
 
 	return(min_index)
 
 def match():
+	update_logic()
+
 	global image_1
 	global image_2
 
@@ -219,7 +222,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 	frame2 = Frame(super_frame)
 	frame2.grid(row = 0, column = 1)
 
-	Label(frame2, text = 'Bot').grid(row = 0, columnspan = 4)
+	Label(frame2, text = p2.name).grid(row = 0, columnspan = 4)
 	logic_label = [''] * 4
 	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 		logic_label[index] = Label(frame2, text = action, width = 10, height = 3)
@@ -228,7 +231,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 	frame3 = Frame(super_frame)
 	frame3.grid(row = 1, column = 0)
 
-	Label(frame3, text = 'John').grid(rowspan = 4, column = 0)
+	Label(frame3, text = p1.name).grid(rowspan = 4, column = 0)
 	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 		Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
 
@@ -246,8 +249,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 
 	for i in range(4):
 		for j in range(4):
-			label_list[i][j] = Label(frame4, width = 8, height = 4)
-			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
+			label_list[i][j] = Label(frame4, width = 8, height = 4, text = format(list_function[i][j], '.2f'))
 			label_list[i][j].grid(row = i, column = j)
 
 	min_max = [''] * 4
@@ -256,14 +258,11 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 
 	min_index = 0
+
 	for i in range(1, 4):
 		if min_max[min_index] > min_max[i]:
 			min_index = i
 
-	for i in range(4):
-		if i == min_index:
-			logic_label[i]['bg'] = 'red'
-		else:
-			logic_label[i]['bg'] = '#d9d9d9'
+	logic_label[min_index]['bg'] = 'red'
 
 window.mainloop()
