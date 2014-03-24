@@ -72,7 +72,7 @@ def menu_change():
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
 
-def p2_action(life_p2):
+def p2_action():
 	global image_2
 
 	action = update_logic()
@@ -85,7 +85,7 @@ def p2_action(life_p2):
 		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
 	elif action == 2:
 		if p2.block():
-			p2.health = life_p2
+			action = 3
 		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
 	else:
 		p2.wait()
@@ -94,14 +94,19 @@ def p2_action(life_p2):
 	label_2['image'] = image_2
 	label_2.update()
 
+	return action
+
 def p1_punch():
 	global image_1
 
 	life_p2 = p2.health
 
+	action = p2_action()
+
 	p1.punch(p2)
 
-	p2_action(life_p2)
+	if action == 3:
+		p2.health = life_p2
 
 	menu_change()
 
@@ -116,9 +121,12 @@ def p1_kick():
 
 	life_p2 = p2.health
 
+	action = p2_action()
+
 	p1.kick(p2)
 
-	p2_action(life_p2)
+	if action == 3:
+		p2.health = life_p2
 
 	menu_change()
 
@@ -133,9 +141,9 @@ def p1_block():
 
 	life_p1 = p1.health
 
-	action = p1.block()
+	p2_action()
 
-	p2_action(p2.health)
+	action = p1.block()
 
 	if action == 3:
 		p1.health = life_p1
@@ -151,9 +159,9 @@ def p1_block():
 def p1_wait():
 	global image_1
 
-	p1.wait()
+	p2_action()
 
-	p2_action(p2.health)
+	p1.wait()
 
 	menu_change()
 
