@@ -7,8 +7,8 @@ from classperson import Person
 from time import sleep
 from sys import argv
 
-p1 = Person('John', 13, 0.7, 3, 5, 13)
-p2 = Person('Bot', 13, 0.7, 3, 5, 13)
+p1 = Person('John', 13, 0.7, 3, 5, 0)
+p2 = Person('Bot', 13, 0.7, 3, 5, 2)
 
 def update_logic():
 	list_function = [
@@ -33,16 +33,17 @@ def update_logic():
 		if min_max[min_index] > min_max[i]:
 			min_index = i
 
+	return(min_index)
+
+def paint_label():
 	for i in range(4):
-		if i == min_index:
+		if i == update_logic():
 			logic_label[i]['bg'] = 'red'
 		else:
 			logic_label[i]['bg'] = '#d9d9d9'
 
-	return(min_index)
-
 def match():
-	update_logic()
+	paint_label()
 
 	global image_1
 	global image_2
