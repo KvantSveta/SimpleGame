@@ -7,7 +7,7 @@ from classperson import Person
 from time import sleep
 from sys import argv
 
-p1 = Person('John', 13, 0.7, 3, 5, 0)
+p1 = Person('John', 13, 0.7, 3, 5, 4)
 p2 = Person('Bot', 13, 0.7, 3, 5, 2)
 
 def update_logic():
