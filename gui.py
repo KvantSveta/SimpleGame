@@ -7,8 +7,8 @@ from classperson import Person
 from time import sleep
 from sys import argv
 
-p1 = Person('John', 13, 0.7, 3, 5, 4)
-p2 = Person('Bot', 13, 0.7, 3, 5, 2)
+p1 = Person('John', 15, 0.7, 3, 5, 13)
+p2 = Person('Bot', 15, 0.7, 3, 5, 13)
 
 def update_logic():
 	list_function = [
@@ -21,6 +21,7 @@ def update_logic():
 	for i in range(4):
 		for j in range(4):
 			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
+			label_list[i][j].update()
 
 	min_max = [''] * 4
 
@@ -41,6 +42,7 @@ def paint_label():
 			logic_label[i]['bg'] = 'red'
 		else:
 			logic_label[i]['bg'] = '#d9d9d9'
+		logic_label[i].update()
 
 def match():
 	paint_label()
@@ -65,12 +67,16 @@ def match():
 
 		label_1['image'] = image_1
 		label_2['image'] = image_2
+		label_1.update()
+		label_2.update()
 
 def menu_change():
 	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
 	list_label[1]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
 	list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
 	list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+	for i in range(4):
+		list_label[i].update()
 
 def p2_action():
 	global image_2
