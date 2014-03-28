@@ -178,14 +178,15 @@ def p1_wait():
 	match()
 
 window = Tk()
+window.geometry('620x625')
 window.title('Simple Game')
 
 frame_1 = LabelFrame(window)
-frame_1.grid()
+frame_1.grid(sticky = N)
 
 list_label = [''] * 4
 
-for index, item in enumerate(['Name        ', 'Health       ', 'Endurance']):
+for index, item in enumerate(['Name'.ljust(10), 'Health'.ljust(10), 'Endurance'.ljust(10)]):
 	Label(frame_1, text = item, width = 9).grid(row = index, column = 0)
 	Label(frame_1, text = item, width = 9).grid(row = index, column = 2)
 
