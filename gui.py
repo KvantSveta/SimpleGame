@@ -6,6 +6,7 @@ from tkinter import *
 from classperson import Person
 from time import sleep
 from sys import argv
+from logicbot import *
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
 p2 = Person('Bot', 15, 0.7, 3, 5, 13)
@@ -178,81 +179,80 @@ def p1_wait():
 	match()
 
 window = Tk()
-window.geometry('620x625')
+window.geometry('460x620')
 window.title('Simple Game')
+window.grid()
 
-frame_1 = LabelFrame(window)
-frame_1.grid(sticky = N)
+frame_info_person = Frame(window)
+frame_info_person.grid(sticky = N)
+
+for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
+	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 0)
+	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 2)
+
+Label(frame_info_person, text = p1.name, width = 10).grid(row = 0, column = 1)
+Label(frame_info_person, text = p2.name, width = 10).grid(row = 0, column = 3)
 
 list_label = [''] * 4
 
-for index, item in enumerate(['Name'.ljust(10), 'Health'.ljust(10), 'Endurance'.ljust(10)]):
-	Label(frame_1, text = item, width = 9).grid(row = index, column = 0)
-	Label(frame_1, text = item, width = 9).grid(row = index, column = 2)
-
-Label(frame_1, text = p1.name, width = 9).grid(row = 0, column = 1)
-Label(frame_1, text = p2.name, width = 9).grid(row = 0, column = 3)
-
-list_label[0] = Label(frame_1, text = '[  ' + str(p1.health) + ' ]', width = 9)
+list_label[0] = Label(frame_info_person, text = '[  ' + str(p1.health) + '  ]', width = 10)
 list_label[0].grid(row = 1, column = 1)
-list_label[1] = Label(frame_1, text = '[  ' + str(p2.health) + ' ]', width = 9)
+list_label[1] = Label(frame_info_person, text = '[  ' + str(p2.health) + '  ]', width = 10)
 list_label[1].grid(row = 1, column = 3)
-list_label[2] = Label(frame_1, text = '[  ' + str(p1.endurance) + ' ]', width = 9)
+list_label[2] = Label(frame_info_person, text = '[  ' + str(p1.endurance) + '  ]', width = 10)
 list_label[2].grid(row = 2, column = 1)
-list_label[3] = Label(frame_1, text = '[  ' + str(p2.endurance) + ' ]', width = 9)
+list_label[3] = Label(frame_info_person, text = '[  ' + str(p2.endurance) + '  ]', width = 10)
 list_label[3].grid(row = 2, column = 3)
 
-frame_2 = LabelFrame(window)
-frame_2.grid()
+frame_image = LabelFrame(window)
+frame_image.grid(sticky = N)
 
 image_1 = PhotoImage(file = './Image/' + 'p1_start.gif')
 image_2 = PhotoImage(file = './Image/' + 'p2_start.gif')
-label_1 = Label(frame_2, image = image_1)
-label_2 = Label(frame_2, image = image_2)
+label_1 = Label(frame_image, image = image_1)
+label_2 = Label(frame_image, image = image_2)
 label_1.grid(row = 0, column = 0)
 label_2.grid(row = 0, column = 1)
 
-frame_3 = Frame(window)
-frame_3.grid()
+frame_action = Frame(window)
+frame_action.grid(sticky = N)
 
 list_command = [p1_punch, p1_kick, p1_block, p1_wait]
 
 for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-	Button(frame_3, text = action, width = 12, command = list_command[index]).grid(row = 0, column = index)
+	Button(frame_action, text = action, width = 8, command = list_command[index]).grid(row = 0, column = index)
 
-button = Button(frame_3, text = 'Выйти', width = 12, command = window.quit)
+button = Button(frame_action, text = 'Выйти', width = 8, command = window.quit)
 button.grid(row = 0, column = 4)
 
 if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
-	from logicbot import *
+	frame_payoff_matrix = LabelFrame(window)
+	frame_payoff_matrix.grid(sticky = N)
 
-	super_frame = LabelFrame(window)
-	super_frame.grid()
-
-	frame1 = Frame(super_frame, width = 12, height = 12)
+	frame1 = Frame(frame_payoff_matrix, width = 12, height = 12)
 	frame1.grid(row = 0, column = 0)
 
 	image_ = PhotoImage(file = './' + 'python.gif')
 	Label(frame1, image = image_, width = 66, height = 66).grid()
 
-	frame2 = Frame(super_frame)
-	frame2.grid(row = 0, column = 1)
+	frame2 = Frame(frame_payoff_matrix)
+	frame2.grid(row = 0, column = 1, sticky = N)
 
-	Label(frame2, text = p2.name).grid(row = 0, columnspan = 4)
+	Label(frame2, text = p2.name, height = 2).grid(row = 0, columnspan = 4)
 	logic_label = [''] * 4
 	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-		logic_label[index] = Label(frame2, text = action, width = 10, height = 3)
+		logic_label[index] = Label(frame2, text = action, width = 10, height = 2)
 		logic_label[index].grid(row = 1, column = index)
 
-	frame3 = Frame(super_frame)
-	frame3.grid(row = 1, column = 0)
+	frame3 = Frame(frame_payoff_matrix)
+	frame3.grid(row = 1, column = 0, sticky = N)
 
-	Label(frame3, text = p1.name).grid(rowspan = 4, column = 0)
+	Label(frame3, text = p1.name, width = 4).grid(rowspan = 4, column = 0)
 	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 		Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
 
-	frame4 = Frame(super_frame)
-	frame4.grid(row = 1, column = 1)
+	frame4 = Frame(frame_payoff_matrix)
+	frame4.grid(row = 1, column = 1, sticky = N)
 
 	label_list = [[''] * 4] * 4
 
@@ -265,7 +265,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 
 	for i in range(4):
 		for j in range(4):
-			label_list[i][j] = Label(frame4, width = 8, height = 4, text = format(list_function[i][j], '.2f'))
+			label_list[i][j] = Label(frame4, width = 10, height = 4, text = format(list_function[i][j], '.2f'))
 			label_list[i][j].grid(row = i, column = j)
 
 	min_max = [''] * 4
