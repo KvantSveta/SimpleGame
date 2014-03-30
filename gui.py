@@ -7,9 +7,53 @@ from classperson import Person
 from time import sleep
 from sys import argv
 from logicbot import *
+from numpy import linalg
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
 p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+
+def mixed_strategy():
+	list_function = [
+		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
+		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
+		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
+		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
+	]
+
+	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+	b = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+	c = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+	d = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+
+	for i in range(4):
+		a[i][0] = 1
+		a[i][1] = float(format(list_function[i][1]*100, '.2f'))
+		a[i][2] = float(format(list_function[i][2]*100, '.2f'))
+		a[i][3] = float(format(list_function[i][3]*100, '.2f'))
+
+	for i in range(4):
+		b[i][0] = float(format(list_function[i][0]*100, '.2f'))
+		b[i][1] = 1
+		b[i][2] = float(format(list_function[i][2]*100, '.2f'))
+		b[i][3] = float(format(list_function[i][3]*100, '.2f'))
+
+	for i in range(4):
+		c[i][0] = float(format(list_function[i][0]*100, '.2f'))
+		c[i][1] = float(format(list_function[i][1]*100, '.2f'))
+		c[i][2] = 1
+		c[i][3] = float(format(list_function[i][3]*100, '.2f'))
+
+	for i in range(4):
+		d[i][0] = float(format(list_function[i][0]*100, '.2f'))
+		d[i][1] = float(format(list_function[i][1]*100, '.2f'))
+		d[i][2] = float(format(list_function[i][2]*100, '.2f'))
+		d[i][3] = 1
+	'''
+	print(linalg.det(a))
+	print(linalg.det(b))
+	print(linalg.det(c))
+	print(linalg.det(d))
+	'''
 
 def update_logic():
 	list_function = [
@@ -24,7 +68,7 @@ def update_logic():
 			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
 			label_list[i][j].update()
 
-	min_max = [''] * 4
+	min_max = ['', '', '', '']
 
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
@@ -193,7 +237,7 @@ for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
 Label(frame_info_person, text = p1.name, width = 10).grid(row = 0, column = 1)
 Label(frame_info_person, text = p2.name, width = 10).grid(row = 0, column = 3)
 
-list_label = [''] * 4
+list_label = ['', '', '', '']
 
 list_label[0] = Label(frame_info_person, text = '[  ' + str(p1.health) + '  ]', width = 10)
 list_label[0].grid(row = 1, column = 1)
@@ -239,7 +283,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 	frame2.grid(row = 0, column = 1, sticky = N)
 
 	Label(frame2, text = p2.name, height = 2).grid(row = 0, columnspan = 4)
-	logic_label = [''] * 4
+	logic_label = ['', '', '', '']
 	for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 		logic_label[index] = Label(frame2, text = action, width = 10, height = 2)
 		logic_label[index].grid(row = 1, column = index)
@@ -254,7 +298,7 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 	frame4 = Frame(frame_payoff_matrix)
 	frame4.grid(row = 1, column = 1, sticky = N)
 
-	label_list = [[''] * 4] * 4
+	label_list = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
 
 	list_function = [
 		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
@@ -268,16 +312,26 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 			label_list[i][j] = Label(frame4, width = 10, height = 4, text = format(list_function[i][j], '.2f'))
 			label_list[i][j].grid(row = i, column = j)
 
-	min_max = [''] * 4
+	min_max = ['', '', '', '']
+	max_min = ['', '', '', '']
 
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
+		max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
 
 	min_index = 0
+	max_index = 0
 
 	for i in range(1, 4):
 		if min_max[min_index] > min_max[i]:
 			min_index = i
+		if max_min[max_index] < max_min[i]:
+			max_index = i
+
+	if -min_max[min_index] == max_min[max_index]:
+		pass
+	else:
+		mixed_strategy()
 
 	logic_label[min_index]['bg'] = 'red'
 
