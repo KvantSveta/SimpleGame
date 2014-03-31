@@ -227,6 +227,14 @@ window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
 
+start_frame = Frame()
+start_frame.grid(padx = 124, pady = 200, sticky = NSEW)
+
+Button(start_frame, text = 'Player vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
+Button(start_frame, text = 'Player vs Player', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
+Button(start_frame, text = 'Computer vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
+
+'''
 frame_info_person = Frame(window)
 frame_info_person.grid(sticky = N)
 
@@ -334,5 +342,5 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 		mixed_strategy()
 
 	logic_label[min_index]['bg'] = 'red'
-
+'''
 window.mainloop()
