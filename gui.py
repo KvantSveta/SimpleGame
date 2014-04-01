@@ -10,16 +10,9 @@ from logicbot import *
 from numpy import linalg
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+p2 = Person('Bot', 15, 0.7, 3, 5, 1)
 
-def mixed_strategy():
-	list_function = [
-		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
-		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
-		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
-		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
-	]
-
+def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
 	b = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
 	c = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -27,26 +20,26 @@ def mixed_strategy():
 
 	for i in range(4):
 		a[i][0] = 1
-		a[i][1] = float(format(list_function[i][1]*100, '.2f'))
-		a[i][2] = float(format(list_function[i][2]*100, '.2f'))
-		a[i][3] = float(format(list_function[i][3]*100, '.2f'))
+		a[i][1] = float(format(list_function[i][1], '.2f'))
+		a[i][2] = float(format(list_function[i][2], '.2f'))
+		a[i][3] = float(format(list_function[i][3], '.2f'))
 
 	for i in range(4):
-		b[i][0] = float(format(list_function[i][0]*100, '.2f'))
+		b[i][0] = float(format(list_function[i][0], '.2f'))
 		b[i][1] = 1
-		b[i][2] = float(format(list_function[i][2]*100, '.2f'))
-		b[i][3] = float(format(list_function[i][3]*100, '.2f'))
+		b[i][2] = float(format(list_function[i][2], '.2f'))
+		b[i][3] = float(format(list_function[i][3], '.2f'))
 
 	for i in range(4):
-		c[i][0] = float(format(list_function[i][0]*100, '.2f'))
-		c[i][1] = float(format(list_function[i][1]*100, '.2f'))
+		c[i][0] = float(format(list_function[i][0], '.2f'))
+		c[i][1] = float(format(list_function[i][1], '.2f'))
 		c[i][2] = 1
-		c[i][3] = float(format(list_function[i][3]*100, '.2f'))
+		c[i][3] = float(format(list_function[i][3], '.2f'))
 
 	for i in range(4):
-		d[i][0] = float(format(list_function[i][0]*100, '.2f'))
-		d[i][1] = float(format(list_function[i][1]*100, '.2f'))
-		d[i][2] = float(format(list_function[i][2]*100, '.2f'))
+		d[i][0] = float(format(list_function[i][0], '.2f'))
+		d[i][1] = float(format(list_function[i][1], '.2f'))
+		d[i][2] = float(format(list_function[i][2], '.2f'))
 		d[i][3] = 1
 	'''
 	print(linalg.det(a))
@@ -226,14 +219,13 @@ window = Tk()
 window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
-
+'''
 start_frame = Frame()
 start_frame.grid(padx = 124, pady = 200, sticky = NSEW)
 
 Button(start_frame, text = 'Player vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
 Button(start_frame, text = 'Player vs Player', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
 Button(start_frame, text = 'Computer vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
-
 '''
 frame_info_person = Frame(window)
 frame_info_person.grid(sticky = N)
@@ -339,8 +331,8 @@ if len(argv) == 2 and (argv[1] == '-e' or argv[1] == '--extended'):
 	if -min_max[min_index] == max_min[max_index]:
 		pass
 	else:
-		mixed_strategy()
+		mixed_strategy(list_function)
 
 	logic_label[min_index]['bg'] = 'red'
-'''
+
 window.mainloop()
