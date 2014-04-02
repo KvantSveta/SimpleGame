@@ -55,16 +55,16 @@ frame_action = Frame(window)
 frame_action.grid(sticky = N)
 
 def punch():
-	sockobj.send(b'punch')
+	sockobj.send('punch'.encode())
 
 def kick():
-	sockobj.send(b'kick')
+	sockobj.send('kick'.encode())
 
 def block():
-	sockobj.send(b'block')
+	sockobj.send('block'.encode())
 
 def wait():
-	sockobj.send(b'wait')
+	sockobj.send('wait'.encode())
 
 Button(frame_action, text = 'Удар рукой', width = 8, command = punch).grid(row = 0, column = 0)
 Button(frame_action, text = 'Удар ногой', width = 8, command = kick).grid(row = 0, column = 1)

@@ -238,7 +238,7 @@ while True:
 		data = connection.recv(1024)
 		if not data:
 			break
-		print(data)
+		print(data.decode())
 	connection.close()
 	'''
 	while True:
