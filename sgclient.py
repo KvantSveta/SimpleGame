@@ -58,7 +58,7 @@ def punch():
 	sockobj.send(b'punch')
 
 def kick():
-	sockobj.send(b'kick')	
+	sockobj.send(b'kick')
 
 def block():
 	sockobj.send(b'block')
