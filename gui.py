@@ -10,7 +10,7 @@ from logicbot import *
 from numpy import linalg
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 1)
+p2 = Person('Bot', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
