@@ -6,11 +6,15 @@ from tkinter import *
 from classperson import Person
 from socket import *
 
-serverHost = 'localhost'
+serverHost = '127.0.0.1'
 serverPort = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
-sockobj.connect((serverHost, serverPort))
+try:
+	sockobj.connect((serverHost, serverPort))
+except ConnectionRefusedError:
+	sockobj.connect(('192.168.1.10', serverPort))
+
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
 p2 = Person('Bot', 15, 0.7, 3, 5, 13)
