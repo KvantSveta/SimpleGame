@@ -60,7 +60,14 @@ frame_action.grid(sticky = N)
 
 def punch():
 	sockobj.send('punch'.encode())
-
+	data = sockobj.recv(1024)
+	if data:
+		d = data.decode()
+		list_label[0]['text'] = d[0:2]
+		list_label[1]['text'] = d[2:4]
+		list_label[2]['text'] = d[4:6]
+		list_label[3]['text'] = d[6:8]
+		
 def kick():
 	sockobj.send('kick'.encode())
 

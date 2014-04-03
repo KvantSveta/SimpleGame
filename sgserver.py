@@ -231,6 +231,8 @@ window.grid()
 
 def f_1():
 	connection, address = sockobj.accept()
+	d = str(p1.health) + str(p2.health) + str(p1.endurance) + str(p2.endurance)
+	connection.send(d.encode())
 
 	print('Server connected by', address)
 
