@@ -6,7 +6,6 @@ from socket import *
 from tkinter import *
 from classperson import Person
 from time import sleep
-from sys import argv
 from logicbot import *
 from numpy import linalg
 
@@ -15,7 +14,7 @@ myPort = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
-sockobj.listen(2)
+sockobj.listen(5)
 
 p1 = Person('John', 15, 0.7, 3, 5, 13)
 p2 = Person('Bot', 15, 0.7, 3, 5, 13)
@@ -223,7 +222,6 @@ def p1_wait():
 
 	match()
 
-
 window = Tk()
 window.geometry('460x620')
 window.title('Simple Game')
@@ -240,15 +238,6 @@ while True:
 			break
 		print(data.decode())
 	connection.close()
-	'''
-	while True:
-		data = connection.recv(1024)
-		if not data:
-			break
-		connection.send(b'Echo => ' + data)
-	connection.close()
-	'''
-
 '''
 start_frame = Frame()
 start_frame.grid(padx = 124, pady = 200, sticky = NSEW)

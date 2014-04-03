@@ -74,3 +74,5 @@ button = Button(frame_action, text = 'Выйти', width = 8, command = window.q
 button.grid(row = 0, column = 4)
 
 window.mainloop()
+
+sockobj.close()
