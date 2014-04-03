@@ -26,28 +26,24 @@ def mixed_strategy(list_function):
 	d = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
 
 	for i in range(4):
-		a[i][0] = 1
-		a[i][1] = float(format(list_function[i][1], '.2f'))
-		a[i][2] = float(format(list_function[i][2], '.2f'))
-		a[i][3] = float(format(list_function[i][3], '.2f'))
+		for j in range(4):
+			if j == 0:
+				a[i][j] = 1
+			else:
+				a[i][j] = float(format(list_function[i][j], '.2f'))
+			if j == 1:
+				b[i][j] = 1
+			else:
+				b[i][j] = float(format(list_function[i][j], '.2f'))
+			if j == 2:
+				c[i][j] = 1
+			else:
+				c[i][j] = float(format(list_function[i][j], '.2f'))
+			if j == 3:
+				d[i][j] = 1
+			else:
+				d[i][j] = float(format(list_function[i][j], '.2f'))
 
-	for i in range(4):
-		b[i][0] = float(format(list_function[i][0], '.2f'))
-		b[i][1] = 1
-		b[i][2] = float(format(list_function[i][2], '.2f'))
-		b[i][3] = float(format(list_function[i][3], '.2f'))
-
-	for i in range(4):
-		c[i][0] = float(format(list_function[i][0], '.2f'))
-		c[i][1] = float(format(list_function[i][1], '.2f'))
-		c[i][2] = 1
-		c[i][3] = float(format(list_function[i][3], '.2f'))
-
-	for i in range(4):
-		d[i][0] = float(format(list_function[i][0], '.2f'))
-		d[i][1] = float(format(list_function[i][1], '.2f'))
-		d[i][2] = float(format(list_function[i][2], '.2f'))
-		d[i][3] = 1
 	'''
 	print(linalg.det(a))
 	print(linalg.det(b))
@@ -227,7 +223,7 @@ window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
 
-while True:
+while not True:
 	connection, address = sockobj.accept()
 
 	print('Server connected by', address)
