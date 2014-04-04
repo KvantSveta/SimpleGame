@@ -67,6 +67,8 @@ def punch():
 		list_label[1]['text'] = d[2:4]
 		list_label[2]['text'] = d[4:6]
 		list_label[3]['text'] = d[6:8]
+
+	sockobj.close()
 		
 def kick():
 	sockobj.send('kick'.encode())

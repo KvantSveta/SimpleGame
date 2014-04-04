@@ -16,13 +16,13 @@ myPort = 50007
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
 sockobj.listen(2)
-
+'''
 sockobj_2 = socket(AF_INET, SOCK_STREAM)
 sockobj_2.bind((myHost, 50008))
 sockobj_2.listen(2)
-
+'''
 p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+p2 = Person('Bot', 15, 0.7, 3, 5, 1)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -85,10 +85,10 @@ def update_logic():
 def paint_label():
 	for i in range(4):
 		if i == update_logic():
-			logic_label[i]['bg'] = 'red'
+			logic_label_1[i]['bg'] = 'red'
 		else:
-			logic_label[i]['bg'] = '#d9d9d9'
-		logic_label[i].update()
+			logic_label_1[i]['bg'] = '#d9d9d9'
+		logic_label_1[i].update()
 
 def match():
 	paint_label()
@@ -228,7 +228,6 @@ window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
 
-
 def f_1():
 	connection, address = sockobj.accept()
 	d = str(p1.health) + str(p2.health) + str(p1.endurance) + str(p2.endurance)
@@ -243,7 +242,7 @@ def f_1():
 		print(data.decode())
 
 	connection.close()
-	
+
 def f_2():
 	connection_2, address_2 = sockobj_2.accept()
 	
@@ -258,9 +257,9 @@ def f_2():
 	connection_2.close()
 
 thread_1 = Thread(target = f_1, args = ())
-thread_2 = Thread(target = f_2, args = ())
+#thread_2 = Thread(target = f_2, args = ())
 thread_1.start()
-thread_2.start()
+#thread_2.start()
 
 '''
 start_frame = Frame()
@@ -300,7 +299,7 @@ label_1 = Label(frame_image, image = image_1)
 label_2 = Label(frame_image, image = image_2)
 label_1.grid(row = 0, column = 0)
 label_2.grid(row = 0, column = 1)
-
+'''
 frame_action = Frame(window)
 frame_action.grid(sticky = N)
 
@@ -311,7 +310,7 @@ for index, action in enumerate(['Удар рукой', 'Удар ногой', '�
 
 button = Button(frame_action, text = 'Выйти', width = 8, command = window.quit)
 button.grid(row = 0, column = 4)
-
+'''
 frame_payoff_matrix = LabelFrame(window)
 frame_payoff_matrix.grid(sticky = N)
 
@@ -325,17 +324,19 @@ frame2 = Frame(frame_payoff_matrix)
 frame2.grid(row = 0, column = 1, sticky = N)
 
 Label(frame2, text = p2.name, height = 2).grid(row = 0, columnspan = 4)
-logic_label = ['', '', '', '']
+logic_label_1 = ['', '', '', '']
 for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-	logic_label[index] = Label(frame2, text = action, width = 10, height = 2)
-	logic_label[index].grid(row = 1, column = index)
+	logic_label_1[index] = Label(frame2, text = action, width = 10, height = 4)
+	logic_label_1[index].grid(row = 1, column = index)
 
 frame3 = Frame(frame_payoff_matrix)
 frame3.grid(row = 1, column = 0, sticky = N)
 
 Label(frame3, text = p1.name, width = 4).grid(rowspan = 4, column = 0)
+logic_label_2 = ['', '', '', '']
 for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-	Label(frame3, text = action, width = 10, height = 4).grid(row = index, column = 1)
+	logic_label_2[index] = Label(frame3, text = action, width = 10, height = 4)
+	logic_label_2[index].grid(row = index, column = 1)
 
 frame4 = Frame(frame_payoff_matrix)
 frame4.grid(row = 1, column = 1, sticky = N)
@@ -375,9 +376,10 @@ if -min_max[min_index] == max_min[max_index]:
 else:
 	mixed_strategy(list_function)
 
-logic_label[min_index]['bg'] = 'red'
+logic_label_1[min_index]['bg'] = '#D51A3F'
+logic_label_2[max_index]['bg'] = '#5379C2'
 
 window.mainloop()
 
 sockobj.close()
-sockobj_2.close()
+#sockobj_2.close()
