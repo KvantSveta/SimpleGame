@@ -15,7 +15,6 @@ try:
 except ConnectionRefusedError:
 	sockobj.connect(('192.168.1.10', serverPort))
 
-
 p1 = Person('John', 15, 0.7, 3, 5, 13)
 p2 = Person('Bot', 15, 0.7, 3, 5, 13)
 
@@ -60,6 +59,7 @@ frame_action.grid(sticky = N)
 
 def punch():
 	sockobj.send('punch'.encode())
+	'''
 	data = sockobj.recv(1024)
 	if data:
 		d = data.decode()
@@ -67,9 +67,8 @@ def punch():
 		list_label[1]['text'] = d[2:4]
 		list_label[2]['text'] = d[4:6]
 		list_label[3]['text'] = d[6:8]
+	'''
 
-	sockobj.close()
-		
 def kick():
 	sockobj.send('kick'.encode())
 

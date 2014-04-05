@@ -16,13 +16,9 @@ myPort = 50007
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
 sockobj.listen(2)
-'''
-sockobj_2 = socket(AF_INET, SOCK_STREAM)
-sockobj_2.bind((myHost, 50008))
-sockobj_2.listen(2)
-'''
+
 p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 1)
+p2 = Person('Bot', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -48,13 +44,12 @@ def mixed_strategy(list_function):
 				d[i][j] = 1
 			else:
 				d[i][j] = float(format(list_function[i][j], '.2f'))
-
-	'''
+	
 	print(linalg.det(a))
 	print(linalg.det(b))
 	print(linalg.det(c))
 	print(linalg.det(d))
-	'''
+	#'''
 
 def update_logic():
 	list_function = [
@@ -228,10 +223,10 @@ window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
 
-def f_1():
+def sock_connect(sockobj):
 	connection, address = sockobj.accept()
-	d = str(p1.health) + str(p2.health) + str(p1.endurance) + str(p2.endurance)
-	connection.send(d.encode())
+	#d = str(p1.health) + str(p2.health) + str(p1.endurance) + str(p2.endurance)
+	#connection.send(d.encode())
 
 	print('Server connected by', address)
 
@@ -243,23 +238,7 @@ def f_1():
 
 	connection.close()
 
-def f_2():
-	connection_2, address_2 = sockobj_2.accept()
-	
-	print('Server connected by', address_2)
-	
-	while True:
-		data_2 = connection_2.recv(1024)
-		if not data_2:
-			break
-		print(data_2.decode())
-	
-	connection_2.close()
-
-thread_1 = Thread(target = f_1, args = ())
-#thread_2 = Thread(target = f_2, args = ())
-thread_1.start()
-#thread_2.start()
+Thread(target = sock_connect, args = (sockobj,)).start()
 
 '''
 start_frame = Frame()
@@ -382,4 +361,3 @@ logic_label_2[max_index]['bg'] = '#5379C2'
 window.mainloop()
 
 sockobj.close()
-#sockobj_2.close()
