@@ -5,6 +5,7 @@ __author__ = 'j.d.'
 from tkinter import *
 from classperson import Person
 from socket import *
+from time import sleep
 
 serverHost = '127.0.0.1'
 serverPort = 50007
@@ -15,8 +16,33 @@ try:
 except ConnectionRefusedError:
 	sockobj.connect(('192.168.1.10', serverPort))
 
-p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+
+window = Tk()
+window.geometry('460x292')
+window.title('Simple Game')
+window.grid()
+
+def get_name():
+	name = entry.get()
+
+	sockobj.send(name.encode())
+
+	window.destroy()
+
+start_frame = Frame()
+start_frame.grid(padx = 144, pady = 100, sticky = NSEW)
+
+Label(start_frame, text = 'Введите имя:', width = 20, font = 'Helvetica 10').grid()
+
+entry = Entry(start_frame, width = 23, font = 'Helvetica 10')
+entry.grid()
+entry.insert(0, 'John')
+
+Button(start_frame, text = 'Player vs Computer', width = 20, command = get_name, font = 'Helvetica 10').grid()
+Button(start_frame, text = 'Player vs Player', width = 20, command = get_name, font = 'Helvetica 10').grid()
+
+window.mainloop()
+
 
 window = Tk()
 window.geometry('460x292')
@@ -30,18 +56,21 @@ for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
-Label(frame_info_person, text = p1.name, width = 10).grid(row = 0, column = 1)
-Label(frame_info_person, text = p2.name, width = 10).grid(row = 0, column = 3)
+data = sockobj.recv(1024)
+start_info = data.decode().split()
+
+Label(frame_info_person, text = start_info[0], width = 10).grid(row = 0, column = 1)
+Label(frame_info_person, text = start_info[1], width = 10).grid(row = 0, column = 3)
 
 list_label = ['', '', '', '']
 
-list_label[0] = Label(frame_info_person, text = '[  ' + str(p1.health) + '  ]', width = 10)
+list_label[0] = Label(frame_info_person, text = '[  ' + str(start_info[2]) + '  ]', width = 10)
 list_label[0].grid(row = 1, column = 1)
-list_label[1] = Label(frame_info_person, text = '[  ' + str(p2.health) + '  ]', width = 10)
+list_label[1] = Label(frame_info_person, text = '[  ' + str(start_info[3]) + '  ]', width = 10)
 list_label[1].grid(row = 1, column = 3)
-list_label[2] = Label(frame_info_person, text = '[  ' + str(p1.endurance) + '  ]', width = 10)
+list_label[2] = Label(frame_info_person, text = '[  ' + str(start_info[4]) + '  ]', width = 10)
 list_label[2].grid(row = 2, column = 1)
-list_label[3] = Label(frame_info_person, text = '[  ' + str(p2.endurance) + '  ]', width = 10)
+list_label[3] = Label(frame_info_person, text = '[  ' + str(start_info[5]) + '  ]', width = 10)
 list_label[3].grid(row = 2, column = 3)
 
 frame_image = LabelFrame(window)
@@ -59,15 +88,6 @@ frame_action.grid(sticky = N)
 
 def punch():
 	sockobj.send('punch'.encode())
-	'''
-	data = sockobj.recv(1024)
-	if data:
-		d = data.decode()
-		list_label[0]['text'] = d[0:2]
-		list_label[1]['text'] = d[2:4]
-		list_label[2]['text'] = d[4:6]
-		list_label[3]['text'] = d[6:8]
-	'''
 
 def kick():
 	sockobj.send('kick'.encode())

@@ -7,18 +7,19 @@ from tkinter import *
 from classperson import Person
 from time import sleep
 from logicbot import *
-from numpy import linalg
+from numpy.linalg import det
 from threading import Thread
+from os import system
 
 myHost = ''
 myPort = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
-sockobj.listen(2)
+sockobj.listen(1)
 
-p1 = Person('John', 15, 0.7, 3, 5, 13)
-p2 = Person('Bot', 15, 0.7, 3, 5, 13)
+p1 = Person('', 15, 0.7, 3, 5, 13)
+p2 = Person('', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -44,11 +45,11 @@ def mixed_strategy(list_function):
 				d[i][j] = 1
 			else:
 				d[i][j] = float(format(list_function[i][j], '.2f'))
-	
-	print(linalg.det(a))
-	print(linalg.det(b))
-	print(linalg.det(c))
-	print(linalg.det(d))
+
+	print(det(a))
+	print(det(b))
+	print(det(c))
+	print(det(d))
 	#'''
 
 def update_logic():
@@ -224,30 +225,29 @@ window.title('Simple Game')
 window.grid()
 
 def sock_connect(sockobj):
+	#system('./sgclient.py')
 	connection, address = sockobj.accept()
-	#d = str(p1.health) + str(p2.health) + str(p1.endurance) + str(p2.endurance)
-	#connection.send(d.encode())
 
 	print('Server connected by', address)
 
-	while True:
-		data = connection.recv(1024)
-		if not data:
-			break
-		print(data.decode())
+	data = connection.recv(1024)
+
+	p1_name = data.decode()
+
+	p2_name = 'Bot'
+
+	label_p1_name['text'] = p1_name
+	label_p2_name['text'] = p2_name
+
+	data = p1_name + ' '  + p2_name + ' ' + str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' '+ str(p2.endurance)
+
+	connection.send(data.encode())
 
 	connection.close()
 
 Thread(target = sock_connect, args = (sockobj,)).start()
+#Thread(target = sock_connect, args = (sockobj,)).start()
 
-'''
-start_frame = Frame()
-start_frame.grid(padx = 124, pady = 200, sticky = NSEW)
-
-Button(start_frame, text = 'Player vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
-Button(start_frame, text = 'Player vs Player', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
-Button(start_frame, text = 'Computer vs Computer', height = 2, width = 20, command = window.quit, font = 'Helvetica 12').grid()
-'''
 frame_info_person = Frame(window)
 frame_info_person.grid(sticky = N)
 
@@ -255,8 +255,10 @@ for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
-Label(frame_info_person, text = p1.name, width = 10).grid(row = 0, column = 1)
-Label(frame_info_person, text = p2.name, width = 10).grid(row = 0, column = 3)
+label_p1_name = Label(frame_info_person, text = p1.name, width = 10)
+label_p1_name.grid(row = 0, column = 1)
+label_p2_name = Label(frame_info_person, text = p2.name, width = 10)
+label_p2_name.grid(row = 0, column = 3)
 
 list_label = ['', '', '', '']
 
