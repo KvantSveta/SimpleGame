@@ -39,7 +39,7 @@ entry.grid()
 entry.insert(0, 'John')
 
 Button(start_frame, text = 'Player vs Computer', width = 20, command = get_name, font = 'Helvetica 10').grid()
-Button(start_frame, text = 'Player vs Player', width = 20, command = get_name, font = 'Helvetica 10').grid()
+Button(start_frame, text = 'Player vs Player', width = 20, command = window.quit, font = 'Helvetica 10').grid()
 
 window.mainloop()
 

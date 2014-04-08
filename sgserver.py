@@ -66,35 +66,38 @@ def update_logic():
 			label_list[i][j].update()
 
 	min_max = ['', '', '', '']
+	max_min = ['', '', '', '']
 
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
-
+		max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
+	
 	min_index = 0
+	max_index = 0
 
 	for i in range(1, 4):
 		if min_max[min_index] > min_max[i]:
 			min_index = i
+		if max_min[max_index] < max_min[i]:
+			max_index = i
+
+	logic_label_1[min_index]['bg'] = '#D51A3F'
+	logic_label_2[max_index]['bg'] = '#5379C2'
 
 	return(min_index)
 
-def paint_label():
+def match():
 	for i in range(4):
 		if i == update_logic():
-			logic_label_1[i]['bg'] = 'red'
+			logic_label_1[i]['bg'] = '#D51A3F'
 		else:
 			logic_label_1[i]['bg'] = '#d9d9d9'
 		logic_label_1[i].update()
-
-def match():
-	paint_label()
 
 	global image_1
 	global image_2
 
 	if p1.health == 0 or p2.health == 0:
-		button.grab_set()
-
 		if p1.health == 0 and p2.health == 0:
 			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
@@ -111,6 +114,10 @@ def match():
 		label_2['image'] = image_2
 		label_1.update()
 		label_2.update()
+
+		return True
+
+	return False
 
 def menu_change():
 	list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
@@ -144,91 +151,9 @@ def p2_action():
 
 	return action
 
-def p1_punch():
-	global image_1
-
-	life_p2 = p2.health
-
-	action = p2_action()
-
-	p1.punch(p2)
-
-	if action == 3:
-		p2.health = life_p2
-
-	menu_change()
-
-	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
-	label_1['image'] = image_1
-	label_1.update()
-
-	match()
-
-def p1_kick():
-	global image_1
-
-	life_p2 = p2.health
-
-	action = p2_action()
-
-	p1.kick(p2)
-
-	if action == 3:
-		p2.health = life_p2
-
-	menu_change()
-
-	image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
-	label_1['image'] = image_1
-	label_1.update()
-
-	match()
-
-def p1_block():
-	global image_1
-
-	life_p1 = p1.health
-
-	p2_action()
-
-	action = p1.block()
-
-	if action == 3:
-		p1.health = life_p1
-
-	menu_change()
-
-	image_1 = PhotoImage(file = './Image/' + 'p1_block.gif')
-	label_1['image'] = image_1
-	label_1.update()
-
-	match()
-
-def p1_wait():
-	global image_1
-
-	p2_action()
-
-	p1.wait()
-
-	menu_change()
-
-	image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
-	label_1['image'] = image_1
-	label_1.update()
-
-	match()
-
-window = Tk()
-window.geometry('460x620')
-window.title('Simple Game')
-window.grid()
-
 def sock_connect(sockobj):
-	#system('./sgclient.py')
 	connection, address = sockobj.accept()
-
-	print('Server connected by', address)
+	print('Игрок подключился к серверу ', address)
 
 	data = connection.recv(1024)
 
@@ -243,7 +168,50 @@ def sock_connect(sockobj):
 
 	connection.send(data.encode())
 
+	while True:
+		global image_1
+
+		p1_life = p1.health
+		p2_life = p2.health
+
+		act = p2_action()
+
+		action = connection.recv(1024)
+		p1_action = action.decode()
+		if p1_action == 'punch':
+			p1.punch(p2)
+			image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
+		elif p1_action == 'kick':
+			p1.kick(p2)
+			image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
+		elif p1_action == 'block':
+			if p1.block() == 3:
+				p1.health = p1_life
+			image_1 = PhotoImage(file = './Image/' + 'p1_block.gif')
+		else:
+			p1.wait()
+			image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
+		label_1['image'] = image_1
+		label_1.update()
+
+		if act == 3:
+			p2.health = p2_life
+
+		menu_change()
+'''
+		data = str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' '+ str(p2.endurance) + ' '
+
+		connection.send()
+'''
+		if match():
+			break
+
 	connection.close()
+
+window = Tk()
+window.geometry('460x620')
+window.title('Simple Game')
+window.grid()
 
 Thread(target = sock_connect, args = (sockobj,)).start()
 #Thread(target = sock_connect, args = (sockobj,)).start()
