@@ -87,7 +87,35 @@ frame_action = Frame(window)
 frame_action.grid(sticky = N)
 
 def punch():
+	global image_1
+	global image_2
+
 	sockobj.send('punch'.encode())
+
+	data = sockobj.recv(1024)
+	new_info = data.decode().split()
+
+	list_label[0]['text'] = new_info[0]
+	list_label[1]['text'] = new_info[1]
+	list_label[2]['text'] = new_info[2]
+	list_label[3]['text'] = new_info[3]
+
+	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
+	label_1['image'] = image_1
+	label_1.update()
+
+	if new_info[4] == 0:
+		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
+	elif new_info[4] == 1:
+		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+	elif new_info[4] == 2:
+		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	else:
+		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+
+	label_2['image'] = image_2
+	label_2.update()
+
 
 def kick():
 	sockobj.send('kick'.encode())

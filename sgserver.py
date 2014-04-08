@@ -198,11 +198,11 @@ def sock_connect(sockobj):
 			p2.health = p2_life
 
 		menu_change()
-'''
-		data = str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' '+ str(p2.endurance) + ' '
 
-		connection.send()
-'''
+		data = str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance) + ' ' + str(act)
+
+		connection.send(data.encode())
+
 		if match():
 			break
 
