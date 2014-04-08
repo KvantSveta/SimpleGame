@@ -18,8 +18,8 @@ sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
 sockobj.listen(1)
 
-p1 = Person('', 15, 0.7, 3, 5, 13)
-p2 = Person('', 15, 0.7, 3, 5, 13)
+p1 = Person('', 15, 0.7, 3, 5, 4)
+p2 = Person('', 15, 0.7, 3, 5, 1)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -50,7 +50,6 @@ def mixed_strategy(list_function):
 	print(det(b))
 	print(det(c))
 	print(det(d))
-	#'''
 
 def update_logic():
 	global list_function
@@ -66,7 +65,7 @@ def update_logic():
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 		max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
-	
+
 	min_index = max_index = 0
 
 	for i in range(1, 4):
@@ -283,30 +282,6 @@ for i in range(4):
 	for j in range(4):
 		label_list[i][j] = Label(frame4, width = 10, height = 4, text = format(list_function[i][j], '.2f'))
 		label_list[i][j].grid(row = i, column = j)
-
-min_max = ['', '', '', '']
-max_min = ['', '', '', '']
-
-for i in range(4):
-	min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
-	max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
-
-min_index = max_index = 0
-
-for i in range(1, 4):
-	if min_max[min_index] > min_max[i]:
-		min_index = i
-	if max_min[max_index] < max_min[i]:
-		max_index = i
-
-if -min_max[min_index] == max_min[max_index]:
-	pass
-else:
-	pass
-	#mixed_strategy(list_function)
-
-logic_label_1[min_index]['bg'] = '#D51A3F'
-logic_label_2[max_index]['bg'] = '#5379C2'
 
 window.mainloop()
 

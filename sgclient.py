@@ -98,8 +98,6 @@ def fighting(image):
 	list_label[2]['text'] = new_info[2]
 	list_label[3]['text'] = new_info[3]
 
-	image_1 = image
-
 	if new_info[4] == '0':
 		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
 	elif new_info[4] == '1':
@@ -109,7 +107,7 @@ def fighting(image):
 	else:
 		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
 
-	label_1['image'] = image_1
+	label_1['image'] = image
 	label_2['image'] = image_2
 
 	label_1.update()
@@ -139,30 +137,30 @@ def fighting(image):
 def punch():
 	sockobj.send('punch'.encode())
 
-	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
+	image = PhotoImage(file = './Image/' + 'p1_punch.gif')
 
-	fighting(image_1)
+	fighting(image)
 
 def kick():
 	sockobj.send('kick'.encode())
 
-	image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
+	image = PhotoImage(file = './Image/' + 'p1_kick.gif')
 
-	fighting(image_1)
+	fighting(image)
 
 def block():
 	sockobj.send('block'.encode())
-	
-	image_1 = PhotoImage(file = './Image/' + 'p1_block.gif')
 
-	fighting(image_1)
+	image = PhotoImage(file = './Image/' + 'p1_block.gif')
+
+	fighting(image)
 
 def wait():
 	sockobj.send('wait'.encode())
 
-	image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
+	image = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
-	fighting(image_1)
+	fighting(image)
 
 Button(frame_action, text = 'Удар рукой', width = 8, command = punch).grid(row = 0, column = 0)
 Button(frame_action, text = 'Удар ногой', width = 8, command = kick).grid(row = 0, column = 1)
