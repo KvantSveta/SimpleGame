@@ -19,7 +19,7 @@ sockobj.bind((myHost, myPort))
 sockobj.listen(1)
 
 p1 = Person('', 15, 0.7, 3, 5, 13)
-p2 = Person('', 1, 0.7, 3, 5, 13)
+p2 = Person('', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
@@ -77,7 +77,7 @@ def update_logic():
 
 	return [min_index, max_index]
 
-def sock_connect(sockobj):
+def fighting(sockobj):
 	connection, address = sockobj.accept()
 	print('Игрок подключился к серверу ', address)
 
@@ -201,7 +201,7 @@ window.geometry('460x620')
 window.title('Simple Game')
 window.grid()
 
-Thread(target = sock_connect, args = (sockobj,)).start()
+Thread(target = fighting, args = (sockobj,)).start()
 
 frame_info_person = Frame(window)
 frame_info_person.grid(sticky = N)

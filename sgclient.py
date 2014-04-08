@@ -86,11 +86,9 @@ label_2.grid(row = 0, column = 1)
 frame_action = Frame(window)
 frame_action.grid(sticky = N)
 
-def punch():
+def fighting(image):
 	global image_1
 	global image_2
-
-	sockobj.send('punch'.encode())
 
 	data = sockobj.recv(1024)
 	new_info = data.decode().split()
@@ -99,196 +97,72 @@ def punch():
 	list_label[1]['text'] = new_info[1]
 	list_label[2]['text'] = new_info[2]
 	list_label[3]['text'] = new_info[3]
+
+	image_1 = image
+
+	if new_info[4] == '0':
+		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
+	elif new_info[4] == '1':
+		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+	elif new_info[4] == '2':
+		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+	else:
+		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+
+	label_1['image'] = image_1
+	label_2['image'] = image_2
+
+	label_1.update()
+	label_2.update()
+
+	if new_info[0] == '0' or new_info[1] == '0':
+		sleep(3)
+
+		if new_info[0] == '0' and new_info[1] == '0':
+			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
+			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
+		elif new_info[0] == '0':
+			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
+			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
+		else:
+			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
+			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
+
+		label_1['image'] = image_1
+		label_2['image'] = image_2
+
+		label_1.update()
+		label_2.update()
+
+		button.grab_set()
+
+def punch():
+	sockobj.send('punch'.encode())
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_punch.gif')
 
-	if new_info[4] == '0':
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	elif new_info[4] == '1':
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif new_info[4] == '2':
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
-	else:
-		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+	fighting(image_1)
 
-	label_1['image'] = image_1
-	label_2['image'] = image_2
-
-	label_1.update()
-	label_2.update()
-
-	if new_info[0] == '0' or new_info[1] == '0':
-		sleep(3)
-
-		if new_info[0] == '0' and new_info[1] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-		elif new_info[0] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
-		else:
-			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-
-		label_1['image'] = image_1
-		label_2['image'] = image_2
-
-		label_1.update()
-		label_2.update()
-
-		button.grab_set()
-	
 def kick():
-	global image_1
-	global image_2
-
 	sockobj.send('kick'.encode())
-
-	data = sockobj.recv(1024)
-	new_info = data.decode().split()
-
-	list_label[0]['text'] = new_info[0]
-	list_label[1]['text'] = new_info[1]
-	list_label[2]['text'] = new_info[2]
-	list_label[3]['text'] = new_info[3]
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_kick.gif')
 
-	if new_info[4] == '0':
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	elif new_info[4] == '1':
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif new_info[4] == '2':
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
-	else:
-		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
-
-	label_1['image'] = image_1
-	label_2['image'] = image_2
-
-	label_1.update()
-	label_2.update()
-
-	if new_info[0] == '0' or new_info[1] == '0':
-		sleep(3)
-
-		if new_info[0] == '0' and new_info[1] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-		elif new_info[0] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
-		else:
-			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-
-		label_1['image'] = image_1
-		label_2['image'] = image_2
-
-		label_1.update()
-		label_2.update()
-
-		button.grab_set()
+	fighting(image_1)
 
 def block():
-	global image_1
-	global image_2
-
 	sockobj.send('block'.encode())
-
-	data = sockobj.recv(1024)
-	new_info = data.decode().split()
-
-	list_label[0]['text'] = new_info[0]
-	list_label[1]['text'] = new_info[1]
-	list_label[2]['text'] = new_info[2]
-	list_label[3]['text'] = new_info[3]
-
+	
 	image_1 = PhotoImage(file = './Image/' + 'p1_block.gif')
 
-	if new_info[4] == '0':
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	elif new_info[4] == '1':
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif new_info[4] == '2':
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
-	else:
-		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
-
-	label_1['image'] = image_1
-	label_2['image'] = image_2
-
-	label_1.update()
-	label_2.update()
-
-	if new_info[0] == '0' or new_info[1] == '0':
-		sleep(3)
-
-		if new_info[0] == '0' and new_info[1] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-		elif new_info[0] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
-		else:
-			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-
-		label_1['image'] = image_1
-		label_2['image'] = image_2
-
-		label_1.update()
-		label_2.update()
+	fighting(image_1)
 
 def wait():
-	global image_1
-	global image_2
-
 	sockobj.send('wait'.encode())
-
-	data = sockobj.recv(1024)
-	new_info = data.decode().split()
-
-	list_label[0]['text'] = new_info[0]
-	list_label[1]['text'] = new_info[1]
-	list_label[2]['text'] = new_info[2]
-	list_label[3]['text'] = new_info[3]
 
 	image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
-	if new_info[4] == '0':
-		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	elif new_info[4] == '1':
-		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif new_info[4] == '2':
-		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
-	else:
-		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
-
-	label_1['image'] = image_1
-	label_2['image'] = image_2
-
-	label_1.update()
-	label_2.update()
-
-	if new_info[0] == '0' or new_info[1] == '0':
-		sleep(3)
-
-		if new_info[0] == '0' and new_info[1] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-		elif new_info[0] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
-		else:
-			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
-			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-
-		label_1['image'] = image_1
-		label_2['image'] = image_2
-
-		label_1.update()
-		label_2.update()
+	fighting(image_1)
 
 Button(frame_action, text = 'Удар рукой', width = 8, command = punch).grid(row = 0, column = 0)
 Button(frame_action, text = 'Удар ногой', width = 8, command = kick).grid(row = 0, column = 1)
