@@ -18,8 +18,8 @@ sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
 sockobj.listen(1)
 
-p1 = Person('', 15, 0.7, 3, 5, 4)
-p2 = Person('', 15, 0.7, 3, 5, 1)
+p1 = Person('', 15, 0.7, 3, 5, 13)
+p2 = Person('', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]

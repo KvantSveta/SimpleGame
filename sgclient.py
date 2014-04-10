@@ -89,7 +89,7 @@ frame_action.grid(sticky = N)
 def fighting(image):
 	global image_1
 	global image_2
-
+	image_1 = image
 	data = sockobj.recv(1024)
 	new_info = data.decode().split()
 
@@ -107,7 +107,7 @@ def fighting(image):
 	else:
 		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
 
-	label_1['image'] = image
+	label_1['image'] = image_1
 	label_2['image'] = image_2
 
 	label_1.update()
