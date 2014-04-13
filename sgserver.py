@@ -9,8 +9,7 @@ from time import sleep
 from logicbot import *
 from threading import Thread
 from os import system
-from numpy import *
-from scipy import *
+from random import random
 
 host = ''
 port = 50007
@@ -19,8 +18,8 @@ sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((host, port))
 sockobj.listen(1)
 
-p1 = Person('', 15, 0.7, 3, 5, 7)
-p2 = Person('', 15, 0.7, 3, 5, 1)
+p1 = Person('', 15, 0.7, 3, 5, 13)
+p2 = Person('', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	min_element = min(min(list_function))
@@ -103,13 +102,13 @@ def mixed_strategy(list_function):
 				P[i] = round(P[i], 4)
 				Q[i] = round(Q[i], 4)
 
-			for i in range(4):
-				logic_label_1[i]['text'] += ('\n' + str(Q[i]))
-				logic_label_2[i]['text'] += ('\n' + str(P[i]))
+			for i, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+				logic_label_1[i]['text'] = action + '\n' + str(Q[i])
+				logic_label_2[i]['text'] = action + '\n' + str(P[i])
 				logic_label_1[i].update()
 				logic_label_2[i].update()
 
-			label_price_game['text'] += ('\n' + str(round(V, 4)))
+			label_price_game['text'] = 'Цена Игры' + '\n' + str(round(V, 4))
 			label_price_game.update()
 
 			return [P, Q]
@@ -136,7 +135,7 @@ def pure_strategy(list_function):
 			max_index = i
 
 	if min_max[min_index] == max_min[max_index]:
-		label_price_game['text'] += ('\n' + str(min_max[min_index]))
+		label_price_game['text'] = 'Цена Игры' + '\n' + str(min_max[min_index])
 		label_price_game.update()
 		return [True, min_index, max_index]
 	else:
@@ -229,24 +228,49 @@ def fighting(sockobj):
 			p1.wait()
 			image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
-		p2_action = min_index
+		if saddle_point:
+			p2_action = min_index
 
-		if p2_action == 0:
-			p2.punch(p1)
-			image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-		elif p2_action == 1:
-			p2.kick(p1)
-			image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-		elif p2_action == 2:
-			if p2.block():
-				p2.health = p2_life
-			image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+			if p2_action == 0:
+				p2.punch(p1)
+				image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
+			elif p2_action == 1:
+				p2.kick(p1)
+				image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+			elif p2_action == 2:
+				if p2.block():
+					p2.health = p2_life
+				image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+			else:
+				p2.wait()
+				image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+
+			if action == 3:
+				p1.health = p1_life
+
 		else:
-			p2.wait()
-			image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+			random_choice = random()
 
-		if action == 3:
-			p1.health = p1_life
+			if random_choice <= Q[0]:
+				p2.punch(p1)
+				image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
+				min_index = 0
+			elif random_choice <= Q[0] + Q[1]:
+				p2.kick(p1)
+				image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
+				min_index = 1
+			elif random_choice <= Q[0] + Q[1] + Q[2]:
+				if p2.block():
+					p2.health = p2_life
+				image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+				min_index = 2
+			else:
+				p2.wait()
+				image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
+				min_index = 3
+
+			if action == 3:
+				p1.health = p1_life
 
 		label_1['image'] = image_1
 		label_2['image'] = image_2
