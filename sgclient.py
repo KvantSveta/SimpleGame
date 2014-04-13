@@ -7,14 +7,14 @@ from classperson import Person
 from socket import *
 from time import sleep
 
-serverHost = '127.0.0.1'
-serverPort = 50007
+host = '127.0.0.1'
+port = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
 try:
-	sockobj.connect((serverHost, serverPort))
+	sockobj.connect((host, port))
 except ConnectionRefusedError:
-	sockobj.connect(('192.168.1.10', serverPort))
+	sockobj.connect(('192.168.1.10', port))
 
 
 window = Tk()

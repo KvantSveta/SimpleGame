@@ -7,56 +7,117 @@ from tkinter import *
 from classperson import Person
 from time import sleep
 from logicbot import *
-from numpy.linalg import det
 from threading import Thread
 from os import system
+from numpy import *
+from scipy import *
 
-myHost = ''
-myPort = 50007
+host = ''
+port = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
-sockobj.bind((myHost, myPort))
+sockobj.bind((host, port))
 sockobj.listen(1)
 
-p1 = Person('', 15, 0.7, 3, 5, 13)
-p2 = Person('', 15, 0.7, 3, 5, 13)
+p1 = Person('', 15, 0.7, 3, 5, 7)
+p2 = Person('', 15, 0.7, 3, 5, 1)
 
 def mixed_strategy(list_function):
-	a = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
-	b = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
-	c = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
-	d = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+	min_element = min(min(list_function))
 
 	for i in range(4):
 		for j in range(4):
-			if j == 0:
-				a[i][j] = 1
-			else:
-				a[i][j] = float(format(list_function[i][j], '.2f'))
-			if j == 1:
-				b[i][j] = 1
-			else:
-				b[i][j] = float(format(list_function[i][j], '.2f'))
-			if j == 2:
-				c[i][j] = 1
-			else:
-				c[i][j] = float(format(list_function[i][j], '.2f'))
-			if j == 3:
-				d[i][j] = 1
-			else:
-				d[i][j] = float(format(list_function[i][j], '.2f'))
+			list_function[i][j] -= min_element
 
-	print(det(a))
-	print(det(b))
-	print(det(c))
-	print(det(d))
+	lf = list_function
+
+	simplex_table = [
+		['базис', 'B',     'x1',     'x2',     'x3',     'x4', 'x5', 'x6', 'x7', 'x8'],
+		['x5'   ,   1, lf[0][0], lf[0][1], lf[0][2], lf[0][3],    1,    0,    0,    0], 
+		['x6'   ,   1, lf[1][0], lf[1][1], lf[1][2], lf[1][3],    0,    1,    0,    0], 
+		['x7'   ,   1, lf[2][0], lf[2][1], lf[2][2], lf[2][3],    0,    0,    1,    0], 
+		['x8'   ,   1, lf[3][0], lf[3][1], lf[3][2], lf[3][3],    0,    0,    0,    1],
+		['F(x)',    0,       -1,       -1,       -1,       -1,    0,    0,    0,    0]
+	]
+	while True:
+		leading_column = 2
+
+		for i in range(3, 6):
+			if simplex_table[5][leading_column] > simplex_table[5][i]:
+				leading_column = i
+
+		temp = []
+
+		leading_row = 0
+
+		for i in range(1, 5):
+			if simplex_table[i][leading_column] > 0:
+				leading_row = i
+				break
+
+		for i in range(leading_row, 5):
+			if simplex_table[i][leading_column] > 0:
+				if simplex_table[i][1] / simplex_table[i][leading_column] < simplex_table[leading_row][1] / simplex_table[leading_row][leading_column]:
+					leading_row = i
+
+		allow_element = simplex_table[leading_row][leading_column]
+
+		simplex_table[leading_row][0] = simplex_table[0][leading_column]
+
+		temp_table = [[''] * 10, [''] * 10, [''] * 10, [''] * 10, [''] * 10, [''] * 10]
+
+		for i in range(6):
+			for j in range(10):
+				temp_table[i][j] = simplex_table[i][j]
+
+		for i in range(1, 6):
+			for j in range(1, 10):
+				if i == leading_row:
+					simplex_table[i][j] = temp_table[i][j] / allow_element
+				else:
+					simplex_table[i][j] = temp_table[i][j] - temp_table[leading_row][j] * temp_table[i][leading_column] / allow_element
+		
+		if min(simplex_table[5][1:10]) >= 0:
+			from pprint import pprint
+			X = [0] * 4
+
+			for i, value in enumerate(['x1', 'x2', 'x3', 'x4']):
+				for j in range(1, 5):
+					if simplex_table[j][0] == value:
+						X[i] = simplex_table[j][1]
+						break
+
+			Y = simplex_table[5][6:10]
+			F = simplex_table[5][1]
+			G = 1 / F
+			V = G + min_element
+
+			print('Решение найдено', V)
+
+			P = [''] * 4
+			Q = [''] * 4
+
+			for i in range(4):
+				P[i] = G * Y[i]
+				Q[i] = G * X[i]
+
+			for i in range(4):
+				P[i] = round(P[i], 4)
+				Q[i] = round(Q[i], 4)
+
+			return [P, Q]
 
 def update_logic():
-	global list_function
+	list_function = [
+		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
+		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
+		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
+		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
+	]
 
 	for i in range(4):
 		for j in range(4):
-			label_list[i][j]['text'] = format(list_function[i][j], '.2f')
+			label_list[i][j]['text'] = str(round(list_function[i][j], 2))
 			label_list[i][j].update()
 
 	min_max = ['', '', '', '']
@@ -65,6 +126,7 @@ def update_logic():
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 		max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
+		print(round(list_function[i][0], 2), round(list_function[i][1], 2), round(list_function[i][2], 2), round(list_function[i][3], 2))
 
 	min_index = max_index = 0
 
@@ -92,7 +154,7 @@ def fighting(sockobj):
 	label_p1_name_matrix['text'] = p1_name
 	label_p2_name_matrix['text'] = p2_name
 
-	data = p1_name + ' '  + p2_name + ' ' + str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance)
+	data = p1_name + ' ' + p2_name + ' ' + str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance)
 
 	connection.send(data.encode())
 
@@ -280,8 +342,10 @@ list_function = [
 
 for i in range(4):
 	for j in range(4):
-		label_list[i][j] = Label(frame4, width = 10, height = 4, text = format(list_function[i][j], '.2f'))
+		label_list[i][j] = Label(frame4, width = 10, height = 4, text = round(list_function[i][j], 2))
 		label_list[i][j].grid(row = i, column = j)
+
+mixed_strategy(list_function)
 
 window.mainloop()
 
