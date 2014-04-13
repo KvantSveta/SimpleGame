@@ -92,8 +92,6 @@ def mixed_strategy(list_function):
 			G = 1 / F
 			V = G + min_element
 
-			print('Решение найдено', V)
-
 			P = [''] * 4
 			Q = [''] * 4
 
@@ -105,16 +103,18 @@ def mixed_strategy(list_function):
 				P[i] = round(P[i], 4)
 				Q[i] = round(Q[i], 4)
 
+			for i in range(4):
+				logic_label_1[i]['text'] += ('\n' + str(Q[i]))
+				logic_label_2[i]['text'] += ('\n' + str(P[i]))
+				logic_label_1[i].update()
+				logic_label_2[i].update()
+
+			label_price_game['text'] += ('\n' + str(round(V, 4)))
+			label_price_game.update()
+
 			return [P, Q]
 
-def update_logic():
-	list_function = [
-		[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
-		[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
-		[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
-		[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
-	]
-
+def pure_strategy(list_function):
 	for i in range(4):
 		for j in range(4):
 			label_list[i][j]['text'] = str(round(list_function[i][j], 2))
@@ -126,7 +126,6 @@ def update_logic():
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
 		max_min[i] = min(list_function[i][0], list_function[i][1], list_function[i][2], list_function[i][3])
-		print(round(list_function[i][0], 2), round(list_function[i][1], 2), round(list_function[i][2], 2), round(list_function[i][3], 2))
 
 	min_index = max_index = 0
 
@@ -136,7 +135,12 @@ def update_logic():
 		if max_min[max_index] < max_min[i]:
 			max_index = i
 
-	return [min_index, max_index]
+	if min_max[min_index] == max_min[max_index]:
+		label_price_game['text'] += ('\n' + str(min_max[min_index]))
+		label_price_game.update()
+		return [True, min_index, max_index]
+	else:
+		return [False, 0, 0]
 
 def fighting(sockobj):
 	connection, address = sockobj.accept()
@@ -162,22 +166,48 @@ def fighting(sockobj):
 		p1_life = p1.health
 		p2_life = p2.health
 
-		min_index, max_index = update_logic()
+		list_function = [
+			[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
+			[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
+			[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
+			[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
+		]
 
-		for i in range(4):
-			if i == min_index:
-				logic_label_1[i]['bg'] = '#D51A3F'
-			else:
-				logic_label_1[i]['bg'] = '#d9d9d9'
+		saddle_point, min_index, max_index = pure_strategy(list_function)
 
-			logic_label_1[i].update()
+		if saddle_point:
+			for i in range(4):
+				if i == min_index:
+					logic_label_1[i]['bg'] = '#D51A3F'
+				else:
+					logic_label_1[i]['bg'] = '#d9d9d9'
 
-		for i in range(4):
-			if i == max_index:
-				logic_label_2[i]['bg'] = '#5379C2'
-			else:
-				logic_label_2[i]['bg'] = '#d9d9d9'
-			logic_label_2[i].update()
+				logic_label_1[i].update()
+
+			for i in range(4):
+				if i == max_index:
+					logic_label_2[i]['bg'] = '#5379C2'
+				else:
+					logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_2[i].update()
+
+		else:
+			P, Q = mixed_strategy(list_function)
+
+			for i in range(4):
+				if Q[i]:
+					logic_label_1[i]['bg'] = '#D51A3F'
+				else:
+					logic_label_1[i]['bg'] = '#d9d9d9'
+
+				logic_label_1[i].update()
+
+			for i in range(4):
+				if P[i]:
+					logic_label_2[i]['bg'] = '#5379C2'
+				else:
+					logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_2[i].update()
 
 		action = connection.recv(1024)
 
@@ -303,8 +333,8 @@ frame_payoff_matrix.grid(sticky = N)
 frame1 = Frame(frame_payoff_matrix, width = 12, height = 12)
 frame1.grid(row = 0, column = 0)
 
-image_ = PhotoImage(file = './' + 'python.gif')
-Label(frame1, image = image_, width = 66, height = 66).grid()
+label_price_game = Label(frame1, text = 'Цена Игры')
+label_price_game.grid()
 
 frame2 = Frame(frame_payoff_matrix)
 frame2.grid(row = 0, column = 1, sticky = N)
@@ -333,19 +363,10 @@ frame4.grid(row = 1, column = 1, sticky = N)
 
 label_list = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
 
-list_function = [
-	[action_punch_punch(p1, p2), action_punch_kick(p1, p2), action_punch_block(p1, p2), action_punch_wait(p1, p2)],
-	[action_kick_punch(p1, p2), action_kick_kick(p1, p2), action_kick_block(p1, p2), action_kick_wait(p1, p2)],
-	[action_block_punch(p1, p2), action_block_kick(p1, p2), action_block_block(p1, p2), action_block_wait(p1, p2)],
-	[action_wait_punch(p1, p2), action_wait_kick(p1, p2), action_wait_block(p1, p2), action_wait_wait(p1, p2)],
-]
-
 for i in range(4):
 	for j in range(4):
-		label_list[i][j] = Label(frame4, width = 10, height = 4, text = round(list_function[i][j], 2))
+		label_list[i][j] = Label(frame4, width = 10, height = 4, text = '')
 		label_list[i][j].grid(row = i, column = j)
-
-mixed_strategy(list_function)
 
 window.mainloop()
 
