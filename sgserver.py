@@ -313,6 +313,25 @@ def fighting(sockobj):
 			label_1.update()
 			label_2.update()
 
+			for i, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+				logic_label_1[i]['text'] = action
+				logic_label_2[i]['text'] = action
+				logic_label_1[i].update()
+				logic_label_2[i].update()
+
+			label_price_game['text'] = 'Цена Игры'
+			label_price_game.update()
+
+			for i in range(4):
+				logic_label_1[i]['bg'] = '#d9d9d9'
+				logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_1[i].update()
+				logic_label_2[i].update()
+
+			for i in range(4):
+				for j in range(4):
+					label_list[i][j]['text'] = ''
+
 			connection.close()
 
 			return
