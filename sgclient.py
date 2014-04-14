@@ -18,7 +18,7 @@ except ConnectionRefusedError:
 
 
 window = Tk()
-window.geometry('460x292')
+window.geometry('336x292')
 window.title('Simple Game')
 window.grid()
 
@@ -30,7 +30,7 @@ def get_name():
 	window.destroy()
 
 start_frame = Frame()
-start_frame.grid(padx = 144, pady = 100, sticky = NSEW)
+start_frame.grid(padx = 84, pady = 80, sticky = NSEW)
 
 Label(start_frame, text = 'Введите имя:', width = 20, font = 'Helvetica 10').grid()
 
@@ -45,7 +45,7 @@ window.mainloop()
 
 
 window = Tk()
-window.geometry('460x292')
+window.geometry('336x292')
 window.title('Simple Game')
 window.grid()
 
@@ -134,10 +134,8 @@ def fighting(image):
 		label_1.update()
 		label_2.update()
 
-		button.grab_set()
-
 def punch():
-	if int(list_label[2]['text']) >= 3:
+	if int(list_label[2]['text']) >= 3 and int(list_label[0]['text']) and int(list_label[1]['text']):
 		sockobj.send('punch'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_punch.gif')
@@ -145,7 +143,7 @@ def punch():
 		fighting(image)
 
 def kick():
-	if int(list_label[2]['text']) >= 4:
+	if int(list_label[2]['text']) >= 4 and int(list_label[0]['text']) and int(list_label[1]['text']):
 		sockobj.send('kick'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_kick.gif')
@@ -153,25 +151,26 @@ def kick():
 		fighting(image)
 
 def block():
-	sockobj.send('block'.encode())
+	if 	int(list_label[0]['text']) and int(list_label[1]['text']):
+		sockobj.send('block'.encode())
 
-	image = PhotoImage(file = './Image/' + 'p1_block.gif')
+		image = PhotoImage(file = './Image/' + 'p1_block.gif')
 
-	fighting(image)
+		fighting(image)
 
 def wait():
-	sockobj.send('wait'.encode())
+	if 	int(list_label[0]['text']) and int(list_label[1]['text']):
 
-	image = PhotoImage(file = './Image/' + 'p1_wait.gif')
+		sockobj.send('wait'.encode())
 
-	fighting(image)
+		image = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
-Button(frame_action, text = 'Удар рукой', width = 8, command = punch).grid(row = 0, column = 0)
-Button(frame_action, text = 'Удар ногой', width = 8, command = kick).grid(row = 0, column = 1)
-Button(frame_action, text = 'Блок', width = 8, command = block).grid(row = 0, column = 2)
-Button(frame_action, text = 'Ждать', width = 8, command = wait).grid(row = 0, column = 3)
-button = Button(frame_action, text = 'Выйти', width = 8, command = window.quit)
-button.grid(row = 0, column = 4)
+		fighting(image)
+
+Button(frame_action, text = 'Удар рукой', width = 7, command = punch).grid(row = 0, column = 0)
+Button(frame_action, text = 'Удар ногой', width = 7, command = kick).grid(row = 0, column = 1)
+Button(frame_action, text = 'Блок', width = 7, command = block).grid(row = 0, column = 2)
+Button(frame_action, text = 'Ждать', width = 7, command = wait).grid(row = 0, column = 3)
 
 window.mainloop()
 

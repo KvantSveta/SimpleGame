@@ -158,14 +158,10 @@ def fighting(sockobj):
 	data = connection.recv(1024)
 
 	p1_name = data.decode()
-
 	p2_name = 'Bot'
 
-	label_p1_name['text'] = p1_name
-	label_p2_name['text'] = p2_name
-
-	label_p1_name_matrix['text'] = p1_name
-	label_p2_name_matrix['text'] = p2_name
+	label_p1_name['text'] = label_p1_name_matrix['text'] = p1_name
+	label_p2_name['text'] = label_p2_name_matrix['text'] = p2_name
 
 	data = p1_name + ' ' + p2_name + ' ' + str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance)
 
@@ -190,7 +186,6 @@ def fighting(sockobj):
 					logic_label_1[i]['bg'] = '#D51A3F'
 				else:
 					logic_label_1[i]['bg'] = '#d9d9d9'
-
 				logic_label_1[i].update()
 
 			for i in range(4):
@@ -208,7 +203,6 @@ def fighting(sockobj):
 					logic_label_1[i]['bg'] = '#D51A3F'
 				else:
 					logic_label_1[i]['bg'] = '#d9d9d9'
-
 				logic_label_1[i].update()
 
 			for i in range(4):
