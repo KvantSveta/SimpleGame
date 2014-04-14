@@ -38,6 +38,7 @@ def mixed_strategy(list_function):
 		['x8'   ,   1, lf[3][0], lf[3][1], lf[3][2], lf[3][3],    0,    0,    0,    1],
 		['F(x)',    0,       -1,       -1,       -1,       -1,    0,    0,    0,    0]
 	]
+
 	while True:
 		leading_column = 2
 
@@ -53,6 +54,10 @@ def mixed_strategy(list_function):
 			if simplex_table[i][leading_column] > 0:
 				leading_row = i
 				break
+		else:
+			print('Решения нет!!!')
+			os._exit(1)
+			return
 
 		for i in range(leading_row, 5):
 			if simplex_table[i][leading_column] > 0:
@@ -135,6 +140,11 @@ def pure_strategy(list_function):
 			max_index = i
 
 	if min_max[min_index] == max_min[max_index]:
+		for i, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
+			logic_label_1[i]['text'] = action
+			logic_label_2[i]['text'] = action
+			logic_label_1[i].update()
+			logic_label_2[i].update()
 		label_price_game['text'] = 'Цена Игры' + '\n' + str(min_max[min_index])
 		label_price_game.update()
 		return [True, min_index, max_index]
