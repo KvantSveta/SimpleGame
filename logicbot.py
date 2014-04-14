@@ -70,8 +70,8 @@ def action_block_punch(p1, p2):
 		return 0.05
 
 def action_block_kick(p1, p2):
-	if p1.endurance >= 5:
-		return (-p1.leg) * p1.precision_kick * (1 - p2.precision_block) + 0.05 + 0.2
+	if p2.endurance >= 4:
+		return (-p2.leg) * p2.precision_kick * (1 - p1.precision_block) + 0.05 + 0.2
 	else:
 		return 0.05
 
@@ -88,7 +88,7 @@ def action_wait_punch(p1, p2):
 		return 0.65
 
 def action_wait_kick(p1, p2):
-	if p2.endurance >= 5:
+	if p2.endurance >= 4:
 		return (-p2.leg) * p2.precision_kick + 0.65  + 0.2
 	else:
 		return 0.65
