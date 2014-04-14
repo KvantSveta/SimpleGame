@@ -192,7 +192,7 @@ def fighting(sockobj):
 					logic_label_1[i]['bg'] = '#d9d9d9'
 
 				logic_label_1[i].update()
-				
+
 			for i in range(4):
 				if i == max_index:
 					logic_label_2[i]['bg'] = '#5379C2'
@@ -318,6 +318,8 @@ def fighting(sockobj):
 
 			label_1.update()
 			label_2.update()
+
+			return
 
 	connection.close()
 
