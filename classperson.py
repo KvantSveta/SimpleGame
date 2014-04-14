@@ -13,37 +13,28 @@ class Person:
 		self.endurance = endurance
 
 	def punch(self, enemy):
-		if self.endurance >= 3:
-			self.endurance -= 3
-			if random() < self.precision_punch:
-				print('Удар рукой выполнен!')
-				enemy.health -= self.hand
-				if enemy.health < 0:
-					enemy.health = 0
-			else:
-				print('Удар рукой не выполнен! Промах!!')
-			return 1
+		self.endurance -= 3
+		if random() < self.precision_punch:
+			print('Удар рукой выполнен!')
+			enemy.health -= self.hand
+			if enemy.health < 0:
+				enemy.health = 0
 		else:
-			print('Для действия не хватает энергии')
-			self.endurance = 13
-			return 4
+			print('Удар рукой не выполнен! Промах!!!')
+		return 1
+
 
 	def kick(self, enemy):
-		if self.endurance  >= 4:
-			self.endurance -= 4
-			if random() < self.precision_kick:
-				print('Удар ногой выполнен!')
-				enemy.health -= self.leg
-				if enemy.health < 0:
-					enemy.health = 0
-			else:
-				print('Удар ногой не выполнен! Промах!!!')
-			return 2
+		self.endurance -= 4
+		if random() < self.precision_kick:
+			print('Удар ногой выполнен!')
+			enemy.health -= self.leg
+			if enemy.health < 0:
+				enemy.health = 0
 		else:
-			print('Для действия не хватает энергии')
-			self.endurance = 13
-			return 4
-
+			print('Удар ногой не выполнен! Промах!!!')
+		return 2
+		
 	def block(self):
 		if self.endurance < 13:
 			self.endurance += 1

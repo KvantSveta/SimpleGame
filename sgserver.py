@@ -8,7 +8,7 @@ from classperson import Person
 from time import sleep
 from logicbot import *
 from threading import Thread
-from os import system
+from os import *
 from random import random
 
 host = ''
@@ -56,8 +56,7 @@ def mixed_strategy(list_function):
 				break
 		else:
 			print('Решения нет!!!')
-			os._exit(1)
-			return
+			_exit(1)
 
 		for i in range(leading_row, 5):
 			if simplex_table[i][leading_column] > 0:
@@ -153,6 +152,7 @@ def pure_strategy(list_function):
 
 def fighting(sockobj):
 	connection, address = sockobj.accept()
+
 	print('Игрок подключился к серверу ', address)
 
 	data = connection.recv(1024)
@@ -192,7 +192,7 @@ def fighting(sockobj):
 					logic_label_1[i]['bg'] = '#d9d9d9'
 
 				logic_label_1[i].update()
-
+				
 			for i in range(4):
 				if i == max_index:
 					logic_label_2[i]['bg'] = '#5379C2'
@@ -288,10 +288,10 @@ def fighting(sockobj):
 		label_1.update()
 		label_2.update()
 
-		list_label[0]['text'] = '[  ' + str(p1.health).rjust(3) + ' ]'
-		list_label[1]['text'] = '[  ' + str(p2.health).rjust(3) + ' ]'
-		list_label[2]['text'] = '[  ' + str(p1.endurance).rjust(3) + ' ]'
-		list_label[3]['text'] = '[  ' + str(p2.endurance).rjust(3) + ' ]'
+		list_label[0]['text'] = str(p1.health)
+		list_label[1]['text'] = str(p2.health)
+		list_label[2]['text'] = str(p1.endurance)
+		list_label[3]['text'] = str(p2.endurance)
 
 		for i in range(4):
 			list_label[i].update()
@@ -340,15 +340,15 @@ label_p1_name.grid(row = 0, column = 1)
 label_p2_name = Label(frame_info_person, text = p2.name, width = 10)
 label_p2_name.grid(row = 0, column = 3)
 
-list_label = ['', '', '', '']
+list_label = [''] * 4
 
-list_label[0] = Label(frame_info_person, text = '[  ' + str(p1.health) + '  ]', width = 10)
+list_label[0] = Label(frame_info_person, text = str(p1.health), width = 10)
 list_label[0].grid(row = 1, column = 1)
-list_label[1] = Label(frame_info_person, text = '[  ' + str(p2.health) + '  ]', width = 10)
+list_label[1] = Label(frame_info_person, text = str(p2.health), width = 10)
 list_label[1].grid(row = 1, column = 3)
-list_label[2] = Label(frame_info_person, text = '[  ' + str(p1.endurance) + '  ]', width = 10)
+list_label[2] = Label(frame_info_person, text = str(p1.endurance), width = 10)
 list_label[2].grid(row = 2, column = 1)
-list_label[3] = Label(frame_info_person, text = '[  ' + str(p2.endurance) + '  ]', width = 10)
+list_label[3] = Label(frame_info_person, text = str(p2.endurance), width = 10)
 list_label[3].grid(row = 2, column = 3)
 
 frame_image = LabelFrame(window)
@@ -376,7 +376,7 @@ frame2.grid(row = 0, column = 1, sticky = N)
 label_p2_name_matrix = Label(frame2, text = p2.name, height = 2)
 label_p2_name_matrix.grid(row = 0, columnspan = 4)
 
-logic_label_1 = ['', '', '', '']
+logic_label_1 = [''] * 4
 for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 	logic_label_1[index] = Label(frame2, text = action, width = 10, height = 4)
 	logic_label_1[index].grid(row = 1, column = index)
@@ -387,7 +387,7 @@ frame3.grid(row = 1, column = 0, sticky = N)
 label_p1_name_matrix = Label(frame3, text = p1.name, width = 4)
 label_p1_name_matrix.grid(rowspan = 4, column = 0)
 
-logic_label_2 = ['', '', '', '']
+logic_label_2 = [''] * 4
 for index, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
 	logic_label_2[index] = Label(frame3, text = action, width = 10, height = 4)
 	logic_label_2[index].grid(row = index, column = 1)
@@ -395,7 +395,7 @@ for index, action in enumerate(['Удар рукой', 'Удар ногой', '�
 frame4 = Frame(frame_payoff_matrix)
 frame4.grid(row = 1, column = 1, sticky = N)
 
-label_list = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', '']]
+label_list = [[''] * 4, [''] * 4, [''] * 4, [''] * 4]
 
 for i in range(4):
 	for j in range(4):

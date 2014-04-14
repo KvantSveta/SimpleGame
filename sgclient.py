@@ -62,15 +62,15 @@ start_info = data.decode().split()
 Label(frame_info_person, text = start_info[0], width = 10).grid(row = 0, column = 1)
 Label(frame_info_person, text = start_info[1], width = 10).grid(row = 0, column = 3)
 
-list_label = ['', '', '', '']
+list_label = [''] * 4
 
-list_label[0] = Label(frame_info_person, text = '[  ' + str(start_info[2]) + '  ]', width = 10)
+list_label[0] = Label(frame_info_person, text = str(start_info[2]), width = 10)
 list_label[0].grid(row = 1, column = 1)
-list_label[1] = Label(frame_info_person, text = '[  ' + str(start_info[3]) + '  ]', width = 10)
+list_label[1] = Label(frame_info_person, text = str(start_info[3]), width = 10)
 list_label[1].grid(row = 1, column = 3)
-list_label[2] = Label(frame_info_person, text = '[  ' + str(start_info[4]) + '  ]', width = 10)
+list_label[2] = Label(frame_info_person, text = str(start_info[4]), width = 10)
 list_label[2].grid(row = 2, column = 1)
-list_label[3] = Label(frame_info_person, text = '[  ' + str(start_info[5]) + '  ]', width = 10)
+list_label[3] = Label(frame_info_person, text = str(start_info[5]), width = 10)
 list_label[3].grid(row = 2, column = 3)
 
 frame_image = LabelFrame(window)
@@ -89,7 +89,9 @@ frame_action.grid(sticky = N)
 def fighting(image):
 	global image_1
 	global image_2
+
 	image_1 = image
+
 	data = sockobj.recv(1024)
 	new_info = data.decode().split()
 
@@ -135,18 +137,20 @@ def fighting(image):
 		button.grab_set()
 
 def punch():
-	sockobj.send('punch'.encode())
+	if int(list_label[2]['text']) >= 3:
+		sockobj.send('punch'.encode())
 
-	image = PhotoImage(file = './Image/' + 'p1_punch.gif')
+		image = PhotoImage(file = './Image/' + 'p1_punch.gif')
 
-	fighting(image)
+		fighting(image)
 
 def kick():
-	sockobj.send('kick'.encode())
+	if int(list_label[2]['text']) >= 4:
+		sockobj.send('kick'.encode())
 
-	image = PhotoImage(file = './Image/' + 'p1_kick.gif')
+		image = PhotoImage(file = './Image/' + 'p1_kick.gif')
 
-	fighting(image)
+		fighting(image)
 
 def block():
 	sockobj.send('block'.encode())
