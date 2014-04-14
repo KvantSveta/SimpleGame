@@ -313,10 +313,10 @@ def fighting(sockobj):
 			label_1.update()
 			label_2.update()
 
+			connection.close()
+
 			return
-
-	connection.close()
-
+	
 window = Tk()
 window.geometry('460x620')
 window.title('Simple Game')
@@ -399,5 +399,3 @@ for i in range(4):
 		label_list[i][j].grid(row = i, column = j)
 
 window.mainloop()
-
-sockobj.close()
