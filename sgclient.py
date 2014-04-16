@@ -39,6 +39,8 @@ entry_name = Entry(start_frame, width = 23, font = 'Helvetica 10')
 entry_name.grid()
 entry_name.insert(0, 'John')
 
+Label(start_frame, text = 'Введите пароль:', width = 20, font = 'Helvetica 10').grid()
+
 entry_password = Entry(start_frame, width = 23, font = 'Helvetica 10', show="*")
 entry_password.grid()
 
