@@ -18,7 +18,7 @@ except ConnectionRefusedError:
 
 
 window = Tk()
-window.geometry('336x292')
+window.geometry('336x292+500+100')
 window.title('Simple Game')
 window.grid()
 
@@ -45,7 +45,7 @@ window.mainloop()
 
 
 window = Tk()
-window.geometry('336x292')
+window.geometry('336x292+500+100')
 window.title('Simple Game')
 window.grid()
 
