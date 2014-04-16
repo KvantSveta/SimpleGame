@@ -23,7 +23,8 @@ window.title('Simple Game')
 window.grid()
 
 def get_name():
-	name = entry.get()
+	name = entry_name.get()
+	password = entry_password.get()
 
 	sockobj.send(name.encode())
 
@@ -34,9 +35,12 @@ start_frame.grid(padx = 84, pady = 80, sticky = NSEW)
 
 Label(start_frame, text = 'Введите имя:', width = 20, font = 'Helvetica 10').grid()
 
-entry = Entry(start_frame, width = 23, font = 'Helvetica 10')
-entry.grid()
-entry.insert(0, 'John')
+entry_name = Entry(start_frame, width = 23, font = 'Helvetica 10')
+entry_name.grid()
+entry_name.insert(0, 'John')
+
+entry_password = Entry(start_frame, width = 23, font = 'Helvetica 10', show="*")
+entry_password.grid()
 
 Button(start_frame, text = 'Player vs Computer', width = 20, command = get_name, font = 'Helvetica 10').grid()
 Button(start_frame, text = 'Player vs Player', width = 20, command = window.quit, font = 'Helvetica 10').grid()
