@@ -3,9 +3,9 @@
 __author__ = 'j.d.'
 
 from tkinter import *
-from classperson import Person
 from socket import *
 from time import sleep
+from classperson import Person
 
 host = '127.0.0.1'
 port = 50007

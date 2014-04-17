@@ -2,14 +2,14 @@
 
 __author__ = 'j.d.'
 
-from socket import *
-from tkinter import *
-from classperson import Person
-from time import sleep
-from logicbot import *
-from threading import Thread
 from os import *
+from tkinter import *
+from socket import *
 from random import random
+from threading import Thread
+from time import sleep
+from classperson import Person
+from logicbot import *
 
 host = ''
 port = 50007
@@ -36,7 +36,7 @@ def mixed_strategy(list_function):
 		['x6'   ,   1, lf[1][0], lf[1][1], lf[1][2], lf[1][3],    0,    1,    0,    0], 
 		['x7'   ,   1, lf[2][0], lf[2][1], lf[2][2], lf[2][3],    0,    0,    1,    0], 
 		['x8'   ,   1, lf[3][0], lf[3][1], lf[3][2], lf[3][3],    0,    0,    0,    1],
-		['F(x)',    0,       -1,       -1,       -1,       -1,    0,    0,    0,    0]
+		['F(x)' ,   0,       -1,       -1,       -1,       -1,    0,    0,    0,    0]
 	]
 
 	while True:
