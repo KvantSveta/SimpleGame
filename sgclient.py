@@ -5,6 +5,7 @@ __author__ = 'j.d.'
 from tkinter import *
 from socket import *
 from time import sleep
+from hashlib import sha512
 from classperson import Person
 
 host = '127.0.0.1'
@@ -26,7 +27,12 @@ def get_name():
 	name = entry_name.get()
 	password = entry_password.get()
 
-	sockobj.send(name.encode())
+	hash_sha512 = sha512(password.encode())
+	hash_password = hash_sha512.hexdigest()
+
+	data = name + ' ' + hash_password
+
+	sockobj.send(data.encode())
 
 	window.destroy()
 

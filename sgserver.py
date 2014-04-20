@@ -157,7 +157,8 @@ def fighting(sockobj):
 
 	data = connection.recv(1024)
 
-	p1_name = data.decode()
+	p1_name, p1_hash_password = data.decode().split()
+	print(p1_hash_password)
 	p2_name = 'Bot'
 
 	label_p1_name['text'] = label_p1_name_matrix['text'] = p1_name
