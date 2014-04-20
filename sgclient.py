@@ -4,6 +4,7 @@ __author__ = 'j.d.'
 
 from tkinter import *
 from socket import *
+from ssl import *
 from time import sleep
 from hashlib import sha512
 from classperson import Person
@@ -12,10 +13,12 @@ host = '127.0.0.1'
 port = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
+ssl_sockobj = wrap_socket(sockobj, ca_certs='server.crt', cert_reqs=CERT_REQUIRED)
+
 try:
-	sockobj.connect((host, port))
+	ssl_sockobj.connect((host, port))
 except ConnectionRefusedError:
-	sockobj.connect(('192.168.1.10', port))
+	ssl_sockobj.connect(('192.168.1.10', port))
 
 
 window = Tk()
@@ -32,7 +35,7 @@ def get_name():
 
 	data = name + ' ' + hash_password
 
-	sockobj.send(data.encode())
+	ssl_sockobj.send(data.encode())
 
 	window.destroy()
 
@@ -68,7 +71,7 @@ for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
-data = sockobj.recv(1024)
+data = ssl_sockobj.recv(1024)
 start_info = data.decode().split()
 
 Label(frame_info_person, text = start_info[0], width = 10).grid(row = 0, column = 1)
@@ -104,7 +107,7 @@ def fighting(image):
 
 	image_1 = image
 
-	data = sockobj.recv(1024)
+	data = ssl_sockobj.recv(1024)
 	new_info = data.decode().split()
 
 	list_label[0]['text'] = new_info[0]
@@ -148,7 +151,7 @@ def fighting(image):
 
 def punch():
 	if int(list_label[2]['text']) >= 3 and int(list_label[0]['text']) and int(list_label[1]['text']):
-		sockobj.send('punch'.encode())
+		ssl_sockobj.send('punch'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_punch.gif')
 
@@ -156,7 +159,7 @@ def punch():
 
 def kick():
 	if int(list_label[2]['text']) >= 4 and int(list_label[0]['text']) and int(list_label[1]['text']):
-		sockobj.send('kick'.encode())
+		ssl_sockobj.send('kick'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_kick.gif')
 
@@ -164,7 +167,7 @@ def kick():
 
 def block():
 	if 	int(list_label[0]['text']) and int(list_label[1]['text']):
-		sockobj.send('block'.encode())
+		ssl_sockobj.send('block'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_block.gif')
 
@@ -172,8 +175,7 @@ def block():
 
 def wait():
 	if 	int(list_label[0]['text']) and int(list_label[1]['text']):
-
-		sockobj.send('wait'.encode())
+		ssl_sockobj.send('wait'.encode())
 
 		image = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
@@ -186,4 +188,4 @@ Button(frame_action, text = 'Ждать', width = 7, command = wait).grid(row = 
 
 window.mainloop()
 
-sockobj.close()
+ssl_sockobj.close()

@@ -5,18 +5,20 @@ __author__ = 'j.d.'
 from os import *
 from tkinter import *
 from socket import *
+from ssl import *
 from random import random
 from threading import Thread
 from time import sleep
 from classperson import Person
 from logicbot import *
 
-host = ''
-port = 50007
+context = SSLContext(PROTOCOL_TLSv1)
+context.load_cert_chain(certfile='server.crt', keyfile='server.key')
+#context.load_cert_chain(certfile='/etc/ssl/certs/DigiCert_High_Assurance_EV_Root_CA.pem', keyfile='/home/jd/SimpleGame/key')
 
 sockobj = socket(AF_INET, SOCK_STREAM)
-sockobj.bind((host, port))
-sockobj.listen(1)
+sockobj.bind(('', 50007))
+sockobj.listen(5)
 
 p1 = Person('', 15, 0.7, 3, 5, 13)
 p2 = Person('', 15, 0.7, 3, 5, 13)
@@ -151,14 +153,15 @@ def pure_strategy(list_function):
 		return [False, 0, 0]
 
 def fighting(sockobj):
-	connection, address = sockobj.accept()
+	new_socket, address = sockobj.accept()
+	connection = context.wrap_socket(new_socket, server_side=True)
 
 	print('Игрок подключился к серверу ', address)
 
 	data = connection.recv(1024)
 
 	p1_name, p1_hash_password = data.decode().split()
-	print(p1_hash_password)
+
 	p2_name = 'Bot'
 
 	label_p1_name['text'] = label_p1_name_matrix['text'] = p1_name
@@ -333,6 +336,7 @@ def fighting(sockobj):
 				for j in range(4):
 					label_list[i][j]['text'] = ''
 
+			connection.shutdown(SHUT_RDWR)
 			connection.close()
 
 			return
