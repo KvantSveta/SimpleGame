@@ -23,7 +23,6 @@ class Person:
 			print('Удар рукой не выполнен! Промах!!!')
 		return 1
 
-
 	def kick(self, enemy):
 		self.endurance -= 4
 		if random() < self.precision_kick:
@@ -34,7 +33,7 @@ class Person:
 		else:
 			print('Удар ногой не выполнен! Промах!!!')
 		return 2
-		
+
 	def block(self):
 		if self.endurance < 13:
 			self.endurance += 1

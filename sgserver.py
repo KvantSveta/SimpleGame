@@ -79,7 +79,7 @@ def mixed_strategy(list_function):
 					simplex_table[i][j] = temp_table[i][j] / allow_element
 				else:
 					simplex_table[i][j] = temp_table[i][j] - temp_table[leading_row][j] * temp_table[i][leading_column] / allow_element
-		
+
 		if min(simplex_table[5][1:10]) >= 0:
 			from pprint import pprint
 			X = [0] * 4
@@ -336,7 +336,7 @@ def fighting(sockobj):
 			connection.close()
 
 			return
-	
+
 window = Tk()
 window.geometry('460x620')
 window.title('Simple Game')
