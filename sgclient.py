@@ -13,7 +13,7 @@ host = '127.0.0.1'
 port = 50007
 
 sockobj = socket(AF_INET, SOCK_STREAM)
-ssl_sockobj = wrap_socket(sockobj, ca_certs='server.crt', cert_reqs=CERT_REQUIRED)
+ssl_sockobj = wrap_socket(sockobj, ca_certs='cert.pem', cert_reqs=CERT_REQUIRED)
 
 try:
 	ssl_sockobj.connect((host, port))

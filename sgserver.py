@@ -13,8 +13,7 @@ from classperson import Person
 from logicbot import *
 
 context = SSLContext(PROTOCOL_TLSv1)
-context.load_cert_chain(certfile='server.crt', keyfile='server.key')
-#context.load_cert_chain(certfile='/etc/ssl/certs/DigiCert_High_Assurance_EV_Root_CA.pem', keyfile='/home/jd/SimpleGame/key')
+context.load_cert_chain(certfile='cert.pem', keyfile='cert.pem')
 
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind(('', 50007))
