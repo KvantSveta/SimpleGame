@@ -30,6 +30,9 @@ def get_name():
 	name = entry_name.get()
 	password = entry_password.get()
 
+	solt = 'python'
+	password += solt
+
 	hash_sha512 = sha512(password.encode())
 	hash_password = hash_sha512.hexdigest()
 
@@ -149,6 +152,8 @@ def fighting(image):
 		label_1.update()
 		label_2.update()
 
+		ssl_sockobj.close()
+
 def punch():
 	if int(list_label[2]['text']) >= 3 and int(list_label[0]['text']) and int(list_label[1]['text']):
 		ssl_sockobj.send('punch'.encode())
@@ -187,5 +192,3 @@ Button(frame_action, text = 'Блок', width = 7, command = block).grid(row = 0
 Button(frame_action, text = 'Ждать', width = 7, command = wait).grid(row = 0, column = 3)
 
 window.mainloop()
-
-ssl_sockobj.close()
