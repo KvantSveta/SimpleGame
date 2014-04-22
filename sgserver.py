@@ -162,8 +162,10 @@ def fighting(sockobj):
 	cur = conn.cursor()
 
 	cur.execute("""CREATE TABLE IF NOT EXISTS Users 
-		(Id INTEGER, Name TEXT, Password TEXT, Fighting INTEGER, Win INTEGER)
+		(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Password TEXT, Fighting INTEGER, Win INTEGER)
 	""")
+
+	conn.commit()
 
 	print('Игрок подключился к серверу ', address)
 
@@ -179,7 +181,11 @@ def fighting(sockobj):
 		data_db = cur.fetchall()
 
 		if not data_db:
-			cur.execute("INSERT INTO Users VALUES(0, ?, ?, 0, 0)", [p1_name, p1_hash_password])
+			cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
+				(?, ?, 1, 0)""", [p1_name, p1_hash_password])
+			conn.commit()
+			connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
+			authorization = True
 		else:
 			for row in data_db:
 				if p1_name == row[1] and p1_hash_password == row[2]:
@@ -190,6 +196,9 @@ def fighting(sockobj):
 					connection.send(('Defeat' + ' ' + 'Неправильный логин/пароль').encode())
 					break
 			else:
+				cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
+					(?, ?, 1, 0)""", [p1_name, p1_hash_password])
+				conn.commit()
 				connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
 				authorization = True
 
@@ -332,6 +341,11 @@ def fighting(sockobj):
 		if p1.health == 0 or p2.health == 0:
 			sleep(3)
 
+			cur.execute('SELECT Fighting, Win FROM Users WHERE Name=?', (p1_name,))
+
+			fighting, win = cur.fetchone()
+			fighting += 1
+
 			if p1.health == 0 and p2.health == 0:
 				image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
@@ -339,8 +353,14 @@ def fighting(sockobj):
 				image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
 			else:
+				win += 1
 				image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
+
+			cur.execute('UPDATE Users SET Fighting=?, Win=? WHERE Name=?', (fighting, win, p1_name))
+
+			conn.commit()
+			cur.close()
 
 			label_1['image'] = image_1
 			label_2['image'] = image_2
