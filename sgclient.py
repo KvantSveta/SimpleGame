@@ -3,6 +3,7 @@
 __author__ = 'j.d.'
 
 from tkinter import *
+from tkinter import messagebox
 from socket import *
 from ssl import *
 from time import sleep
@@ -41,7 +42,15 @@ def authorization():
 
 		ssl_sockobj.send(data.encode())
 
-		window.destroy()
+		data = ssl_sockobj.recv(1024)
+
+		info = data.decode()
+		data = info.split()
+
+		messagebox.showinfo(data[0], data[1:])
+
+		if data[0] == 'Success':	
+			window.destroy()
 
 start_frame = Frame()
 start_frame.grid(padx = 84, pady = 80, sticky = NSEW)

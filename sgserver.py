@@ -6,6 +6,7 @@ from os import *
 from tkinter import *
 from socket import *
 from ssl import *
+from sqlite3 import *
 from random import random
 from threading import Thread
 from time import sleep
@@ -18,6 +19,7 @@ context.load_cert_chain(certfile='cert.pem', keyfile='cert.pem')
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind(('', 50007))
 sockobj.listen(5)
+
 
 p1 = Person('', 15, 0.7, 3, 5, 13)
 p2 = Person('', 15, 0.7, 3, 5, 13)
@@ -155,11 +157,41 @@ def fighting(sockobj):
 	new_socket, address = sockobj.accept()
 	connection = context.wrap_socket(new_socket, server_side=True)
 
+	conn = connect('sgdatabase.db')
+
+	cur = conn.cursor()
+
+	cur.execute("""CREATE TABLE IF NOT EXISTS Users 
+		(Id INTEGER, Name TEXT, Password TEXT, Fighting INTEGER, Win INTEGER)
+	""")
+
 	print('Игрок подключился к серверу ', address)
 
-	data = connection.recv(1024)
+	authorization = False
 
-	p1_name, p1_hash_password = data.decode().split()
+	while not authorization:
+		data = connection.recv(1024)
+
+		p1_name, p1_hash_password = data.decode().split()
+
+		cur.execute("SELECT * FROM Users")
+
+		data_db = cur.fetchall()
+
+		if not data_db:
+			cur.execute("INSERT INTO Users VALUES(0, ?, ?, 0, 0)", [p1_name, p1_hash_password])
+		else:
+			for row in data_db:
+				if p1_name == row[1] and p1_hash_password == row[2]:
+					connection.send(('Success' + ' ' + 'Авторизация прошла успешно').encode())
+					authorization = True
+					break
+				if p1_name == row[1] or p1_hash_password == row[2]:
+					connection.send(('Defeat' + ' ' + 'Неправильный логин/пароль').encode())
+					break
+			else:
+				connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
+				authorization = True
 
 	p2_name = 'Bot'
 
