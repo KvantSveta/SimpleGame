@@ -6,7 +6,7 @@ from tkinter import *
 from socket import *
 from ssl import *
 from time import sleep
-from hashlib import sha512
+from hashlib import sha256
 from classperson import Person
 
 host = '127.0.0.1'
@@ -26,21 +26,22 @@ window.geometry('336x292+500+100')
 window.title('Simple Game')
 window.grid()
 
-def get_name():
+def authorization():
 	name = entry_name.get()
 	password = entry_password.get()
 
-	solt = 'python'
-	password += solt
+	if (1 <= len(name) <= 10) and (len(password) >= 6):
+		solt = 'python'
+		password += solt
 
-	hash_sha512 = sha512(password.encode())
-	hash_password = hash_sha512.hexdigest()
+		hash_sha256 = sha256(password.encode())
+		hash_password = hash_sha256.hexdigest()
 
-	data = name + ' ' + hash_password
+		data = name + ' ' + hash_password
 
-	ssl_sockobj.send(data.encode())
+		ssl_sockobj.send(data.encode())
 
-	window.destroy()
+		window.destroy()
 
 start_frame = Frame()
 start_frame.grid(padx = 84, pady = 80, sticky = NSEW)
@@ -49,14 +50,13 @@ Label(start_frame, text = 'Введите имя:', width = 20, font = 'Helvetic
 
 entry_name = Entry(start_frame, width = 23, font = 'Helvetica 10')
 entry_name.grid()
-entry_name.insert(0, 'John')
 
 Label(start_frame, text = 'Введите пароль:', width = 20, font = 'Helvetica 10').grid()
 
 entry_password = Entry(start_frame, width = 23, font = 'Helvetica 10', show="*")
 entry_password.grid()
 
-Button(start_frame, text = 'Player vs Computer', width = 20, command = get_name, font = 'Helvetica 10').grid()
+Button(start_frame, text = 'Player vs Computer', width = 20, command = authorization, font = 'Helvetica 10').grid()
 Button(start_frame, text = 'Player vs Player', width = 20, command = window.quit, font = 'Helvetica 10').grid()
 
 window.mainloop()
