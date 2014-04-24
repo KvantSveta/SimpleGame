@@ -204,8 +204,13 @@ def fighting(sockobj):
 
 	p2_name = 'Bot'
 
-	label_p1_name['text'] = label_p1_name_matrix['text'] = p1_name
+	label_p1_name['text'] = p1_name
 	label_p2_name['text'] = label_p2_name_matrix['text'] = p2_name
+
+	label_p1_name_matrix['text'] = ''
+	for i in p1_name:
+		label_p1_name_matrix['text'] += i
+		label_p1_name_matrix['text'] += '\n'
 
 	data = p1_name + ' ' + p2_name + ' ' + str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance)
 
