@@ -182,7 +182,7 @@ def fighting(sockobj):
 
 		if not data_db:
 			cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
-				(?, ?, 1, 0)""", [p1_name, p1_hash_password])
+				(?, ?, 0, 0)""", [p1_name, p1_hash_password])
 			conn.commit()
 			connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
 			authorization = True
@@ -197,7 +197,7 @@ def fighting(sockobj):
 					break
 			else:
 				cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
-					(?, ?, 1, 0)""", [p1_name, p1_hash_password])
+					(?, ?, 0, 0)""", [p1_name, p1_hash_password])
 				conn.commit()
 				connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
 				authorization = True
