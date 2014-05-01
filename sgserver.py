@@ -126,8 +126,8 @@ def pure_strategy(list_function):
 			label_list[i][j]['text'] = str(round(list_function[i][j], 2))
 			label_list[i][j].update()
 
-	min_max = ['', '', '', '']
-	max_min = ['', '', '', '']
+	min_max = [''] * 4
+	max_min = [''] * 4
 
 	for i in range(4):
 		min_max[i] = max(list_function[0][i], list_function[1][i], list_function[2][i], list_function[3][i])
