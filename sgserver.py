@@ -180,27 +180,20 @@ def fighting(sockobj):
 
 		data_db = cur.fetchall()
 
-		if not data_db:
+		for row in data_db:
+			if p1_name == row[1] and p1_hash_password == row[2]:
+				connection.send(('Success' + ' ' + 'Авторизация прошла успешно').encode())
+				authorization = True
+				break
+			if p1_name == row[1] or p1_hash_password == row[2]:
+				connection.send(('Defeat' + ' ' + 'Неправильный логин/пароль').encode())
+				break
+		else:
 			cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
 				(?, ?, 0, 0)""", [p1_name, p1_hash_password])
 			conn.commit()
 			connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
 			authorization = True
-		else:
-			for row in data_db:
-				if p1_name == row[1] and p1_hash_password == row[2]:
-					connection.send(('Success' + ' ' + 'Авторизация прошла успешно').encode())
-					authorization = True
-					break
-				if p1_name == row[1] or p1_hash_password == row[2]:
-					connection.send(('Defeat' + ' ' + 'Неправильный логин/пароль').encode())
-					break
-			else:
-				cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
-					(?, ?, 0, 0)""", [p1_name, p1_hash_password])
-				conn.commit()
-				connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
-				authorization = True
 
 	p2_name = 'Bot'
 
