@@ -44,8 +44,7 @@ def authorization():
 
 		data = ssl_sockobj.recv(1024)
 
-		info = data.decode()
-		data = info.split()
+		data = data.decode().split()
 
 		messagebox.showinfo(data[0], data[1:])
 
@@ -127,11 +126,11 @@ def fighting(image):
 	list_label[2]['text'] = new_info[2]
 	list_label[3]['text'] = new_info[3]
 
-	if new_info[4] == '0':
+	if new_info[4] == 'punch':
 		image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-	elif new_info[4] == '1':
+	elif new_info[4] == 'kick':
 		image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-	elif new_info[4] == '2':
+	elif new_info[4] == 'block':
 		image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
 	else:
 		image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
@@ -142,17 +141,17 @@ def fighting(image):
 	label_1.update()
 	label_2.update()
 
-	if new_info[0] == '0' or new_info[1] == '0':
-		sleep(3)
+	if int(new_info[0]) == 0 or int(new_info[1]) == 0:
+		sleep(2)
 
-		if new_info[0] == '0' and new_info[1] == '0':
-			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
+		if int(new_info[0]):
+			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
 			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-		elif new_info[0] == '0':
+		elif int(new_info[1]):
 			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 			image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
 		else:
-			image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
+			image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 			image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
 
 		label_1['image'] = image_1

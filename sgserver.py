@@ -176,16 +176,16 @@ def fighting(sockobj):
 
 		p1_name, p1_hash_password = data.decode().split()
 
-		cur.execute("SELECT * FROM Users")
+		cur.execute("SELECT Name, Password FROM Users")
 
 		data_db = cur.fetchall()
 
-		for row in data_db:
-			if p1_name == row[1] and p1_hash_password == row[2]:
+		for name, password in data_db:
+			if p1_name == name and p1_hash_password == password:
 				connection.send(('Success' + ' ' + 'Авторизация прошла успешно').encode())
 				authorization = True
 				break
-			if p1_name == row[1] or p1_hash_password == row[2]:
+			if p1_name == name or p1_hash_password == password:
 				connection.send(('Defeat' + ' ' + 'Неправильный логин/пароль').encode())
 				break
 		else:
@@ -209,7 +209,7 @@ def fighting(sockobj):
 
 	connection.send(data.encode())
 
-	while p1.health and p2.health:
+	while True:
 		p1_life = p1.health
 		p2_life = p2.health
 
@@ -226,15 +226,11 @@ def fighting(sockobj):
 			for i in range(4):
 				if i == min_index:
 					logic_label_1[i]['bg'] = '#D51A3F'
-				else:
-					logic_label_1[i]['bg'] = '#d9d9d9'
-				logic_label_1[i].update()
-
-			for i in range(4):
-				if i == max_index:
 					logic_label_2[i]['bg'] = '#5379C2'
 				else:
+					logic_label_1[i]['bg'] = '#d9d9d9'
 					logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_1[i].update()
 				logic_label_2[i].update()
 
 		else:
@@ -245,13 +241,11 @@ def fighting(sockobj):
 					logic_label_1[i]['bg'] = '#D51A3F'
 				else:
 					logic_label_1[i]['bg'] = '#d9d9d9'
-				logic_label_1[i].update()
-
-			for i in range(4):
 				if P[i]:
 					logic_label_2[i]['bg'] = '#5379C2'
 				else:
 					logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_1[i].update()
 				logic_label_2[i].update()
 
 		action = connection.recv(1024)
@@ -275,24 +269,23 @@ def fighting(sockobj):
 			image_1 = PhotoImage(file = './Image/' + 'p1_wait.gif')
 
 		if saddle_point:
-			p2_action = min_index
-
-			if p2_action == 0:
+			if min_index == 0:
 				p2.punch(p1)
 				image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-			elif p2_action == 1:
+				min_index = 'punch'
+			elif min_index == 1:
 				p2.kick(p1)
 				image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-			elif p2_action == 2:
+				min_index = 'kick'
+			elif min_index == 2:
 				if p2.block():
 					p2.health = p2_life
 				image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
+				min_index = 'block'
 			else:
 				p2.wait()
 				image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
-
-			if action == 3:
-				p1.health = p1_life
+				min_index = 'wait'
 
 		else:
 			random_choice = random()
@@ -300,23 +293,23 @@ def fighting(sockobj):
 			if random_choice <= Q[0]:
 				p2.punch(p1)
 				image_2 = PhotoImage(file = './Image/' + 'p2_punch.gif')
-				min_index = 0
+				min_index = 'punch'
 			elif random_choice <= Q[0] + Q[1]:
 				p2.kick(p1)
 				image_2 = PhotoImage(file = './Image/' + 'p2_kick.gif')
-				min_index = 1
+				min_index = 'kick'
 			elif random_choice <= Q[0] + Q[1] + Q[2]:
 				if p2.block():
 					p2.health = p2_life
 				image_2 = PhotoImage(file = './Image/' + 'p2_block.gif')
-				min_index = 2
+				min_index = 'block'
 			else:
 				p2.wait()
 				image_2 = PhotoImage(file = './Image/' + 'p2_wait.gif')
-				min_index = 3
+				min_index = 'wait'
 
-			if action == 3:
-				p1.health = p1_life
+		if action == 3:
+			p1.health = p1_life
 
 		label_1['image'] = image_1
 		label_2['image'] = image_2
@@ -332,27 +325,27 @@ def fighting(sockobj):
 		for i in range(4):
 			list_label[i].update()
 
-		data = str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance) + ' ' + str(min_index)
+		data = str(p1.health) + ' ' + str(p2.health) + ' ' + str(p1.endurance) + ' ' + str(p2.endurance) + ' ' + min_index
 
 		connection.send(data.encode())
 
 		if p1.health == 0 or p2.health == 0:
-			sleep(3)
+			sleep(2)
 
 			cur.execute('SELECT Fighting, Win FROM Users WHERE Name=?', (p1_name,))
 
 			fighting, win = cur.fetchone()
 			fighting += 1
 
-			if p1.health == 0 and p2.health == 0:
-				image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
+			if p1.health:
+				image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
-			elif p1.health == 0:
+				win += 1
+			elif p2.health:
 				image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_win.gif')
 			else:
-				win += 1
-				image_1 = PhotoImage(file = './Image/' + 'p1_win.gif')
+				image_1 = PhotoImage(file = './Image/' + 'p1_death.gif')
 				image_2 = PhotoImage(file = './Image/' + 'p2_death.gif')
 
 			cur.execute('UPDATE Users SET Fighting=?, Win=? WHERE Name=?', (fighting, win, p1_name))
@@ -367,8 +360,7 @@ def fighting(sockobj):
 			label_2.update()
 
 			for i, action in enumerate(['Удар рукой', 'Удар ногой', 'Блок', 'Ждать']):
-				logic_label_1[i]['text'] = action
-				logic_label_2[i]['text'] = action
+				logic_label_1[i]['text'] = logic_label_2[i]['text'] = action
 				logic_label_1[i].update()
 				logic_label_2[i].update()
 
@@ -376,8 +368,7 @@ def fighting(sockobj):
 			label_price_game.update()
 
 			for i in range(4):
-				logic_label_1[i]['bg'] = '#d9d9d9'
-				logic_label_2[i]['bg'] = '#d9d9d9'
+				logic_label_1[i]['bg'] = logic_label_2[i]['bg'] = '#d9d9d9'
 				logic_label_1[i].update()
 				logic_label_2[i].update()
 
