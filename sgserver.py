@@ -147,7 +147,7 @@ def pure_strategy(list_function):
 			logic_label_2[i]['text'] = action
 			logic_label_1[i].update()
 			logic_label_2[i].update()
-		label_price_game['text'] = 'Цена Игры' + '\n' + str(min_max[min_index])
+		label_price_game['text'] = 'Цена Игры' + '\n' + str(round(min_max[min_index], 4))
 		label_price_game.update()
 		return [True, min_index, max_index]
 	else:
