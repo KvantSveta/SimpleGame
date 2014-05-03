@@ -21,8 +21,8 @@ sockobj.bind(('', 50007))
 sockobj.listen(5)
 
 
-p1 = Person('', 15, 0.7, 3, 5, 13)
-p2 = Person('', 15, 0.7, 3, 5, 13)
+p1 = Person('', 15, 0.7, 3, 5, 7)
+p2 = Person('', 15, 0.7, 3, 5, 10)
 
 def mixed_strategy(list_function):
 	min_element = min(min(list_function))
@@ -84,7 +84,6 @@ def mixed_strategy(list_function):
 					simplex_table[i][j] = temp_table[i][j] - temp_table[leading_row][j] * temp_table[i][leading_column] / allow_element
 
 		if min(simplex_table[5][1:10]) >= 0:
-			from pprint import pprint
 			X = [0] * 4
 
 			for i, value in enumerate(['x1', 'x2', 'x3', 'x4']):
@@ -115,7 +114,7 @@ def mixed_strategy(list_function):
 				logic_label_1[i].update()
 				logic_label_2[i].update()
 
-			label_price_game['text'] = 'Цена Игры' + '\n' + str(round(V, 4))
+			label_price_game['text'] = 'Цена Игры' + '\n' + str(round(V, 3))
 			label_price_game.update()
 
 			return [P, Q]
@@ -123,7 +122,7 @@ def mixed_strategy(list_function):
 def pure_strategy(list_function):
 	for i in range(4):
 		for j in range(4):
-			label_list[i][j]['text'] = str(round(list_function[i][j], 2))
+			label_list[i][j]['text'] = str(round(list_function[i][j], 3))
 			label_list[i][j].update()
 
 	min_max = [''] * 4
@@ -147,7 +146,7 @@ def pure_strategy(list_function):
 			logic_label_2[i]['text'] = action
 			logic_label_1[i].update()
 			logic_label_2[i].update()
-		label_price_game['text'] = 'Цена Игры' + '\n' + str(round(min_max[min_index], 4))
+		label_price_game['text'] = 'Цена Игры' + '\n' + str(round(min_max[min_index], 3))
 		label_price_game.update()
 		return [True, min_index, max_index]
 	else:
@@ -226,9 +225,11 @@ def fighting(sockobj):
 			for i in range(4):
 				if i == min_index:
 					logic_label_1[i]['bg'] = '#D51A3F'
-					logic_label_2[i]['bg'] = '#5379C2'
 				else:
 					logic_label_1[i]['bg'] = '#d9d9d9'
+				if i == max_index:
+					logic_label_2[i]['bg'] = '#5379C2'
+				else:
 					logic_label_2[i]['bg'] = '#d9d9d9'
 				logic_label_1[i].update()
 				logic_label_2[i].update()
