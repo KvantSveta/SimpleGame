@@ -21,8 +21,8 @@ sockobj.bind(('', 50007))
 sockobj.listen(5)
 
 
-p1 = Person('', 15, 0.7, 3, 5, 7)
-p2 = Person('', 15, 0.7, 3, 5, 10)
+p1 = Person('', 15, 0.7, 3, 5, 13)
+p2 = Person('', 15, 0.7, 3, 5, 13)
 
 def mixed_strategy(list_function):
 	min_element = min(min(list_function))
@@ -189,7 +189,7 @@ def fighting(sockobj):
 				break
 		else:
 			cur.execute("""INSERT INTO Users (Name, Password, Fighting, Win) VALUES
-				(?, ?, 0, 0)""", [p1_name, p1_hash_password])
+				(?, ?, 0, 0)""", (p1_name, p1_hash_password))
 			conn.commit()
 			connection.send(('Success' + ' ' + 'Регистрация прошла успешно').encode())
 			authorization = True
