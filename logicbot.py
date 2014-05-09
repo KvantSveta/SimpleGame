@@ -30,10 +30,10 @@ def action_block_kick(p1, p2):
 	return -p2.leg * p2.precision_kick * p2.endurance * (1 - p1.precision_block) + 3.25
 
 def action_block_block(p1, p2):
-	return (p2.endurance - p1.endurance) * 13 / 20
+	return (p2.endurance - p1.endurance) * 0.65
 
 def action_block_wait(p1, p2):
-	return -(13 - p2.endurance - p1.endurance) * 13 / 20
+	return -(13 - p2.endurance - p1.endurance) * 0.65
 
 def action_wait_punch(p1, p2):
 	return -p2.hand * p2.precision_punch * p2.endurance + 10.4
@@ -42,7 +42,7 @@ def action_wait_kick(p1, p2):
 	return -p2.leg * p2.precision_kick * p2.endurance + 11.05
 
 def action_wait_block(p1, p2):
-	return (13 - p1.endurance - p2.endurance) * 13 / 20
+	return (13 - p1.endurance - p2.endurance) * 0.65
 
 def action_wait_wait(p1, p2):
-	return (p2.endurance - p1.endurance) * 13 / 20
+	return (p2.endurance - p1.endurance) * 0.65
