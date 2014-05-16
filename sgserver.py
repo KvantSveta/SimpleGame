@@ -13,7 +13,11 @@ from time import sleep
 from classperson import Person
 from logicbot import *
 
-context = SSLContext(PROTOCOL_TLSv1_2)
+try:
+	context = SSLContext(PROTOCOL_TLSv1_2)
+except NameError:
+	context = SSLContext(PROTOCOL_TLSv1)
+
 context.load_cert_chain(certfile='cert.pem', keyfile='cert.pem')
 
 sockobj = socket(AF_INET, SOCK_STREAM)
