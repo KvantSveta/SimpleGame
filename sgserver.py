@@ -1,4 +1,4 @@
-#!/usr/bin/python3.3
+#!/usr/local/bin/python3.4
 
 __author__ = 'j.d.'
 
@@ -13,11 +13,7 @@ from time import sleep
 from classperson import Person
 from logicbot import *
 
-try:
-	context = SSLContext(PROTOCOL_TLSv1_2)
-except NameError:
-	context = SSLContext(PROTOCOL_TLSv1)
-
+context = SSLContext(PROTOCOL_TLSv1_1)
 context.load_cert_chain(certfile='cert.pem', keyfile='cert.pem')
 
 sockobj = socket(AF_INET, SOCK_STREAM)
