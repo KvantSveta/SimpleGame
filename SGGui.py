@@ -16,9 +16,9 @@ class Gui():
 			Label(self.frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 			Label(self.frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
-		self.label_p1_name = Label(self.frame_info_person, text = p1.name, width = 10)
+		self.label_p1_name = Label(self.frame_info_person, text = '', width = 10)
 		self.label_p1_name.grid(row = 0, column = 1)
-		self.label_p2_name = Label(self.frame_info_person, text = p2.name, width = 10)
+		self.label_p2_name = Label(self.frame_info_person, text = '', width = 10)
 		self.label_p2_name.grid(row = 0, column = 3)
 
 		self.list_label = [''] * 4
@@ -43,6 +43,9 @@ class Gui():
 		self.label_2.grid(row = 0, column = 1)
 
 	def inform(self, p1, p2):
+		self.label_p1_name = p1.name
+		self.label_p1_name = p2.name
+
 		self.list_label[0].text = str(p1.health)
 		self.list_label[1].text = str(p2.health)
 		self.list_label[2].text = str(p1.endurance)
