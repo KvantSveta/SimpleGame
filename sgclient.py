@@ -48,7 +48,7 @@ def authorization():
 
 		messagebox.showinfo(data[0], data[1:])
 
-		if data[0] == 'Success':	
+		if data[0] == 'Success':
 			window.destroy()
 
 start_frame = Frame()
