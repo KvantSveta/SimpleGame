@@ -1,13 +1,12 @@
 __author__ = 'j.d.'
 
 from tkinter import *
-from classperson import Person
 
 class Gui():
 	"""docstring for Gui"""
-	def __init__(self):
+	def __init__(self, size):
 		self.window = Tk()
-		self.window.geometry('460x620') #window.geometry('336x292+500+100') client
+		self.window.geometry(size)
 		self.window.title('Simple Game')
 		self.window.grid()
 		self.frame_info_person = Frame(self.window)
@@ -24,13 +23,13 @@ class Gui():
 
 		self.list_label = [''] * 4
 
-		self.list_label[0] = Label(self.frame_info_person, text = str(p1.health), width = 10)
+		self.list_label[0] = Label(self.frame_info_person, text = '', width = 10)
 		self.list_label[0].grid(row = 1, column = 1)
-		self.list_label[1] = Label(self.frame_info_person, text = str(p2.health), width = 10)
+		self.list_label[1] = Label(self.frame_info_person, text = '', width = 10)
 		self.list_label[1].grid(row = 1, column = 3)
-		self.list_label[2] = Label(self.frame_info_person, text = str(p1.endurance), width = 10)
+		self.list_label[2] = Label(self.frame_info_person, text = '', width = 10)
 		self.list_label[2].grid(row = 2, column = 1)
-		self.list_label[3] = Label(self.frame_info_person, text = str(p2.endurance), width = 10)
+		self.list_label[3] = Label(self.frame_info_person, text = '', width = 10)
 		self.list_label[3].grid(row = 2, column = 3)
 
 		self.frame_image = LabelFrame(self.window)
@@ -43,9 +42,8 @@ class Gui():
 		self.label_1.grid(row = 0, column = 0)
 		self.label_2.grid(row = 0, column = 1)
 
-
-p1 = Person('', 15, 0.7, 3, 5, 13)
-p2 = Person('', 15, 0.7, 3, 5, 13)
-
-g = Gui()
-g.window.mainloop()
+	def inform(self, p1, p2):
+		self.list_label[0].text = str(p1.health)
+		self.list_label[1].text = str(p2.health)
+		self.list_label[2].text = str(p1.endurance)
+		self.list_label[3].text = str(p2.endurance)
