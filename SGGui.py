@@ -12,7 +12,7 @@ class Gui():
 		self.frame_info_person = Frame(self.window)
 		self.frame_info_person.grid()
 
-		for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
+		for index, item in enumerate(['Name\t\t', 'Health\t\t', 'Endurance\t']):
 			Label(self.frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 			Label(self.frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
@@ -35,16 +35,16 @@ class Gui():
 		self.frame_image = LabelFrame(self.window)
 		self.frame_image.grid(sticky = N)
 
-		self.image_1 = PhotoImage(file = './Image/' + 'p1_start.gif')
-		self.image_2 = PhotoImage(file = './Image/' + 'p2_start.gif')
-		self.label_1 = Label(self.frame_image, image = self.image_1)
-		self.label_2 = Label(self.frame_image, image = self.image_2)
-		self.label_1.grid(row = 0, column = 0)
-		self.label_2.grid(row = 0, column = 1)
+		self.image_p1 = PhotoImage(file = './Image/' + 'p1_start.gif')
+		self.image_p2 = PhotoImage(file = './Image/' + 'p2_start.gif')
+		self.label_p1 = Label(self.frame_image, image = self.image_p1)
+		self.label_p2 = Label(self.frame_image, image = self.image_p2)
+		self.label_p1.grid(row = 0, column = 0)
+		self.label_p2.grid(row = 0, column = 1)
 
 	def inform(self, p1, p2):
-		self.label_p1_name = p1.name
-		self.label_p1_name = p2.name
+		self.label_p1_name.text = 'hi'#p1.name
+		self.label_p1_name.text = p2.name
 
 		self.list_label[0].text = str(p1.health)
 		self.list_label[1].text = str(p2.health)
