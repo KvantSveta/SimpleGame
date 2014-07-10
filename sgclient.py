@@ -78,7 +78,7 @@ window.grid()
 frame_info_person = Frame(window)
 frame_info_person.grid(sticky = N)
 
-for index, item in enumerate(['Name         ', 'Health        ', 'Endurance ']):
+for index, item in enumerate(['Name\t\t', 'Health\t\t', 'Endurance\t']):
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 0)
 	Label(frame_info_person, text = item, width = 9).grid(row = index, column = 2)
 
