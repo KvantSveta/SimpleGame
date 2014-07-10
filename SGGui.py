@@ -43,10 +43,10 @@ class Gui():
 		self.label_p2.grid(row = 0, column = 1)
 
 	def inform(self, p1, p2):
-		self.label_p1_name.text = 'hi'#p1.name
-		self.label_p1_name.text = p2.name
+		self.label_p1_name['text'] = p1.name
+		self.label_p2_name['text'] = p2.name
 
-		self.list_label[0].text = str(p1.health)
-		self.list_label[1].text = str(p2.health)
-		self.list_label[2].text = str(p1.endurance)
-		self.list_label[3].text = str(p2.endurance)
+		self.list_label[0]['text'] = str(p1.health)
+		self.list_label[1]['text'] = str(p2.health)
+		self.list_label[2]['text'] = str(p1.endurance)
+		self.list_label[3]['text'] = str(p2.endurance)
